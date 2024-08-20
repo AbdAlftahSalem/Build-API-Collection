@@ -1,7 +1,8 @@
 import 'dart:io';
 
-import './read_folder_name.dart';
 import '../core/extensions/string_extensions.dart';
+import '../core/model/detail_request_code.dart';
+import './read_folder_name.dart';
 
 // "E:\Node\e-commerce\src\addresses\controller\addresses.controller.js"
 class BuildCollections {
@@ -18,37 +19,37 @@ class BuildCollections {
       File file2 = File(file);
       String content = await file2.readAsString();
       List<String> contentsList = content.split("\n");
-      String desc = "";
-      String route = "";
-      String params = "";
-      String body = "";
-      String header = "";
-      String access = "";
+      List<DetailRequestCode> detailsRequests = [];
+      DetailRequestCode detailRequestCode = DetailRequestCode();
       for (String j in contentsList) {
         if (j.startsWith("// @")) {
           if (j.startsWith("// @desc")) {
-            desc = j.replaceAll("// @desc", "").removeFirstSpaces();
+            detailRequestCode.desc =
+                j.replaceAll("// @desc", "").removeFirstSpaces();
           } else if (j.startsWith("// @route")) {
-            route = j.replaceAll("// @route", "").removeFirstSpaces();
+            detailRequestCode.route =
+                j.replaceAll("// @route", "").removeFirstSpaces();
           } else if (j.startsWith("// @param")) {
-            params = j.replaceAll("// @param", "").removeFirstSpaces();
+            detailRequestCode.params =
+                j.replaceAll("// @param", "").removeFirstSpaces();
           } else if (j.startsWith("// @body")) {
-            body = j.replaceAll("// @body", "").removeFirstSpaces();
+            detailRequestCode.body =
+                j.replaceAll("// @body", "").removeFirstSpaces();
           } else if (j.startsWith("// @header")) {
-            header = j.replaceAll("// @header", "").removeFirstSpaces();
+            detailRequestCode.header =
+                j.replaceAll("// @header", "").removeFirstSpaces();
           } else if (j.startsWith("// @access")) {
-            access = j.replaceAll("// @access", "").removeFirstSpaces();
+            if (j.toLowerCase().contains("privet")) {
+              detailRequestCode.access = "privet";
+            }else{
+              detailRequestCode.access = "public";
+            }
           }
         }
 
         if (j.startsWith("exports.")) {
-          print("DESC : $desc");
-          print("route : $route");
-          print("params : $params");
-          print("body : $body");
-          print("header : $header");
-          print("access : $access");
-          print("Start new method\n\n");
+          detailsRequests.add(detailRequestCode);
+          print("Add ${detailRequestCode.desc} Success ");
         }
       }
     }

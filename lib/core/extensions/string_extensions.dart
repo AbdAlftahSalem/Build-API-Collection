@@ -11,7 +11,7 @@ extension StringConversion on String {
       }
       ++i;
     }
-    return splitString.join();
+    return splitString.join().trim();
   }
 }
 
