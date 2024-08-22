@@ -28,7 +28,7 @@ class ReadRequestFromMethods {
         detailRequestCode: detailsRequests,
       ));
     }
-
+    print(requestData);
     return requestData;
   }
 

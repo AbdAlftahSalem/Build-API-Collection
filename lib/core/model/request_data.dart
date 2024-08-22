@@ -5,4 +5,9 @@ class RequestData {
   List<DetailRequestCode> detailRequestCode;
 
   RequestData({required this.key, required this.detailRequestCode});
+
+  @override
+  String toString() {
+    return 'RequestData{key: $key, detailRequestCode: $detailRequestCode}';
+  }
 }
