@@ -1,4 +1,5 @@
-import 'features/build_collections.dart';
+import 'features/read_request_from_methods.dart';
+
 void main() {
-  BuildCollections.buildCollection();
+  ReadRequestFromMethods.buildCollection();
 }
