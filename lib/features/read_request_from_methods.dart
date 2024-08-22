@@ -2,16 +2,11 @@ import 'dart:io';
 
 import '../core/model/detail_request_code.dart';
 import '../core/model/request_data.dart';
-import './read_folder_name.dart';
 
 // E:\Node\e-commerce\src\auth\controller
 class ReadRequestFromMethods {
-  static Future<List<RequestData>> buildCollection() async {
-    // Read controller folder
-    String folderPath = ReadFolderName.readFolderName();
-
-    // get sub file from controller folder
-    List<FileSystemEntity> subFiles = ReadFolderName.listFiles(folderPath);
+  static Future<List<RequestData>> getAllRequestsFromDir(
+      List<FileSystemEntity> subFiles) async {
     List<RequestData> requestData = [];
 
     for (var i in subFiles) {
@@ -28,7 +23,6 @@ class ReadRequestFromMethods {
         detailRequestCode: detailsRequests,
       ));
     }
-    print(requestData);
     return requestData;
   }
 
