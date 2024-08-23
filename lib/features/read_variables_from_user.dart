@@ -18,34 +18,40 @@ class ReadVariablesFromUser {
     }
 
     if (choice.toLowerCase() == "y") {
-      String key = "";
-      String value = "";
+      VariableModel variableModel = VariableModel(key: "", value: "");
       bool addMoreVariables = true;
       String addMoreVariablesChoice = "";
       while (addMoreVariables ||
           addMoreVariablesChoice.isEmpty ||
           addMoreVariablesChoice.toLowerCase() == "y") {
-        while (key.isEmpty) {
+        while (variableModel.key.isEmpty) {
           stdout.write("Enter the key of variable : ");
-          key = (stdin.readLineSync() ?? "")
+          variableModel.key = (stdin.readLineSync() ?? "")
               .trim()
               .checkIfEmptyAndNullAndShowMessage("😢 Key cannot be empty !!");
         }
-        while (value.isEmpty) {
+        while (variableModel.value.isEmpty) {
           stdout.write("Enter the value of variable : ");
-          value = (stdin.readLineSync() ?? "")
+          variableModel.value = (stdin.readLineSync() ?? "")
               .trim()
               .checkIfEmptyAndNullAndShowMessage("😢 Value cannot be empty !!");
         }
-        variables.add(VariableModel(key: key, value: value));
-        stdout.write(
-            "$key variable add successfully . Do you want add more ? [ y / N ] : ");
-        addMoreVariablesChoice = (stdin.readLineSync() ?? "")
-            .trim()
-            .checkIfEmptyAndNullAndShowMessage("😢 Choice cannot be empty !!");
-        if (addMoreVariablesChoice.toLowerCase() == "n") {
-          addMoreVariables = false;
-          addMoreVariablesChoice = "n";
+        variables.add(variableModel);
+        stdout.write("✅ ${variableModel.key} variable add successfully ...");
+        addMoreVariables = true;
+        while (addMoreVariables) {
+          stdout.write("\n\nDo you want add more ? [ y / N ] : ");
+          addMoreVariablesChoice = (stdin.readLineSync() ?? "")
+              .trim()
+              .checkIfEmptyAndNullAndShowMessage(
+                  "😢 Choice cannot be empty !!");
+          if (addMoreVariablesChoice.toLowerCase() == "y") {
+            variableModel.key = "";
+            variableModel.value = "";
+            addMoreVariables = false;
+          } else if (addMoreVariablesChoice.toLowerCase() == "n") {
+            addMoreVariables = false;
+          }
         }
       }
     }
