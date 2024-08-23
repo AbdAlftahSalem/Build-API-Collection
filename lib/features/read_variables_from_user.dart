@@ -4,7 +4,7 @@ import '../core/extensions/string_extensions.dart';
 import '../core/model/variable_model.dart';
 
 class ReadVariablesFromUser {
-  static readVariablesFromUser() {
+  static List<VariableModel> readVariablesFromUser() {
     List<VariableModel> variables = [];
     String choice = "";
     while (choice.isEmpty) {
@@ -55,6 +55,6 @@ class ReadVariablesFromUser {
         }
       }
     }
-    print(variables.toString());
+    return variables;
   }
 }
