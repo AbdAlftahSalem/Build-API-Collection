@@ -17,9 +17,8 @@ class ReadRequestFromMethods {
       List<String> contentsList = content.split("\n");
       List<DetailRequestCode> detailsRequests = [];
       extractDataFromMethod(contentsList, detailsRequests);
-
       requestData.add(RequestData(
-        key: "${file.split("\\")[file.split("\\").length - 1]}",
+        key: "${(file.split("\\")[file.split("\\").length - 1]).split(".")[0]}",
         detailRequestCode: detailsRequests,
       ));
     }

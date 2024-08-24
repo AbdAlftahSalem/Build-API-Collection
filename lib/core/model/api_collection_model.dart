@@ -4,16 +4,16 @@ import './request_collection_model.dart';
 import './variable_model.dart';
 
 class ApiCollectionModel {
-  InfoModel infoCollection;
-  List<EventModel> events;
-  List<VariableModel> variables;
-  List<RequestCollectionModel> requestCollectionModel;
+  InfoModel? infoCollection;
+  List<EventModel>? events;
+  List<VariableModel>? variables;
+  List<RequestCollectionModel>? requestCollectionModel;
 
   ApiCollectionModel({
-    required this.infoCollection,
-    required this.events,
-    required this.variables,
-    required this.requestCollectionModel,
+    this.infoCollection,
+    this.events,
+    this.variables,
+    this.requestCollectionModel,
   });
 
   Map<String, dynamic> toMap() {
