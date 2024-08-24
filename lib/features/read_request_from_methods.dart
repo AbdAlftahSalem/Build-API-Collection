@@ -10,55 +10,67 @@ class ReadRequestFromMethods {
     List<RequestData> requestData = [];
 
     for (var i in subFiles) {
-      String file = i.toString().replaceAll("File: '", "");
-      file = file.replaceAll("'", "");
-      File file2 = File(file);
-      String content = await file2.readAsString();
-      List<String> contentsList = content.split("\n");
-      List<DetailRequestCode> detailsRequests = [];
-      extractDataFromMethod(contentsList, detailsRequests);
-      requestData.add(RequestData(
-        key: "${(file.split("\\")[file.split("\\").length - 1]).split(".")[0]}",
-        detailRequestCode: detailsRequests,
-      ));
+      if (i.toString().toLowerCase().startsWith("file")) {
+        String file = i.toString().replaceAll("File: '", "");
+        file = file.replaceAll("'", "");
+        File file2 = File(file);
+        String content = await file2.readAsString();
+        List<String> contentsList = content.split("\n");
+        List<DetailRequestCode> detailsRequests =
+            extractDataFromMethod(contentsList);
+        requestData.add(RequestData(
+          key:
+              "${(file.split("\\")[file.split("\\").length - 1]).split(".")[0]}",
+          detailRequestCode: detailsRequests,
+        ));
+      }
     }
     return requestData;
   }
 
-  static void extractDataFromMethod(
-      List<String> contentsList, List<DetailRequestCode> detailsRequests) {
+  static List<DetailRequestCode> extractDataFromMethod(
+      List<String> contentsList) {
     DetailRequestCode detailRequestCode = DetailRequestCode();
+    List<DetailRequestCode> detailsRequests = [];
+    List<String> requestData = [];
     for (String j in contentsList) {
       if (j.startsWith("// @")) {
-        getDetailsRequest(j, detailRequestCode);
+        requestData.add(j);
       } else if (j.startsWith("exports.")) {
+        detailRequestCode = getDetailsRequest(requestData);
         detailsRequests.add(detailRequestCode);
+        detailRequestCode = DetailRequestCode();
         print("⚡ Read ${detailRequestCode.desc} Request Success ... \n");
       }
     }
+    return detailsRequests;
   }
 
-  static void getDetailsRequest(String j, DetailRequestCode detailRequestCode) {
-    if (j.startsWith("// @desc")) {
-      detailRequestCode.desc = j.replaceAll("// @desc", "").trim();
-    } else if (j.startsWith("// @route")) {
-      detailRequestCode.route =
-          j.replaceAll("// @route", "").trim().split(" ")[1];
-      detailRequestCode.requestType =
-          j.replaceAll("// @route", "").trim().split(" ")[0];
-      // print('HERE ${j.replaceAll("// @route", "").trim().split(" ")[0]}');
-    } else if (j.startsWith("// @param")) {
-      detailRequestCode.params = j.replaceAll("// @param", "").trim();
-    } else if (j.startsWith("// @body")) {
-      detailRequestCode.body = j.replaceAll("// @body", "").trim();
-    } else if (j.startsWith("// @header")) {
-      detailRequestCode.header = j.replaceAll("// @header", "").trim();
-    } else if (j.startsWith("// @access")) {
-      if (j.toLowerCase().contains("privet")) {
-        detailRequestCode.access = "privet";
-      } else {
-        detailRequestCode.access = "public";
+  static DetailRequestCode getDetailsRequest(List<String> requestData) {
+    DetailRequestCode detailRequestCode = DetailRequestCode();
+    for (String i in requestData) {
+      if (i.startsWith("// @desc")) {
+        detailRequestCode.desc = i.replaceAll("// @desc", "").trim();
+      } else if (i.startsWith("// @route")) {
+        detailRequestCode.route =
+            i.replaceAll("// @route", "").trim().split(" ")[1];
+        detailRequestCode.requestType =
+            i.replaceAll("// @route", "").trim().split(" ")[0];
+        // print('HERE ${i.replaceAll("// @route", "").trim().split(" ")[0]}');
+      } else if (i.startsWith("// @param")) {
+        detailRequestCode.params = i.replaceAll("// @param", "").trim();
+      } else if (i.startsWith("// @body")) {
+        detailRequestCode.body = i.replaceAll("// @body", "").trim();
+      } else if (i.startsWith("// @header")) {
+        detailRequestCode.header = i.replaceAll("// @header", "").trim();
+      } else if (i.startsWith("// @access")) {
+        if (i.toLowerCase().contains("privet")) {
+          detailRequestCode.access = "privet";
+        } else {
+          detailRequestCode.access = "public";
+        }
       }
     }
+    return detailRequestCode;
   }
 }

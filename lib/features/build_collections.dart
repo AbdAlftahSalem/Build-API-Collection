@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import '../core/model/api_collection_model.dart';
+import '../core/model/request_collection_model.dart';
 import '../core/model/request_data.dart';
 import './read_collection_name.dart';
 import './read_folder_name.dart';
@@ -28,7 +29,18 @@ class BuildCollections {
     // get all data from controllers files
     List<RequestData> allRequestsData =
         await ReadRequestFromMethods.getAllRequestsFromDir(allFilesInDir);
+    _requestAdapter(allRequestsData);
 
     print(allRequestsData);
+  }
+
+  static List<RequestCollectionModel> _requestAdapter(
+      List<RequestData> requestsData) {
+    for (RequestData requestDataLocal in requestsData) {
+      print(requestDataLocal.key);
+      print("${requestDataLocal.detailRequestCode}\n\n");
+    }
+
+    return [];
   }
 }
