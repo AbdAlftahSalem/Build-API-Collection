@@ -7,7 +7,7 @@ class ApiCollectionModel {
   InfoModel? infoCollection;
   List<EventModel>? events;
   List<VariableModel>? variables;
-  List<RequestCollectionModel>? requestCollectionModel;
+  List<FolderRequestCollectionModel>? requestCollectionModel;
 
   ApiCollectionModel({
     this.infoCollection,

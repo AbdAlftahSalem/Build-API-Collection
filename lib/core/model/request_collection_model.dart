@@ -1,8 +1,8 @@
-class RequestCollectionModel {
+class FolderRequestCollectionModel {
   String folderName;
   DetailRequest detailRequest;
 
-  RequestCollectionModel({
+  FolderRequestCollectionModel({
     required this.folderName,
     required this.detailRequest,
   });
@@ -29,9 +29,14 @@ class DetailRequest {
   Map<String, dynamic> toMap() {
     return {
       'requestName': this.requestName,
-      'requestModel': this.requestModel,
+      'requestModel': this.requestModel.toMap(),
       'response': this.response,
     };
+  }
+
+  @override
+  String toString() {
+    return 'DetailRequest {requestName: $requestName, requestModel: $requestModel, response: $response}';
   }
 }
 
@@ -52,9 +57,14 @@ class RequestModel {
     return {
       'method': this.method,
       'header': this.header,
-      'bodyModel': this.bodyModel,
-      'urlModel': this.urlModel,
+      'bodyModel': this.bodyModel.toMap(),
+      'urlModel': this.urlModel.toMap(),
     };
+  }
+
+  @override
+  String toString() {
+    return 'RequestModel{method: $method, header: $header, bodyModel: $bodyModel, urlModel: $urlModel}';
   }
 }
 
@@ -76,21 +86,26 @@ class HeaderModel {
       'type': this.type,
     };
   }
+
+  @override
+  String toString() {
+    return 'HeaderModel{key: $key, value: $value, type: $type}';
+  }
 }
 
 class BodyModel {
-  String mode;
-  String raw;
+  String modeData;
+  String bodyData;
   List<FormDataModel> formData;
 
   BodyModel({
-    required this.mode,
-    this.raw = '',
+    required this.modeData,
+    this.bodyData = '',
     this.formData = const [],
   });
 
   String updateRawValue() {
-    String newRaw = raw.replaceAll("{", "{\r\n    ");
+    String newRaw = bodyData.replaceAll("{", "{\r\n    ");
     newRaw = newRaw.replaceAll('"', '\"');
     newRaw = newRaw.replaceAll("}", "\r\n}");
     return newRaw;
@@ -98,19 +113,27 @@ class BodyModel {
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> objMap = {
-      'mode': this.mode,
-      'raw': this.raw,
-      'formData': this.formData,
+      'mode': modeData,
     };
-    if (mode.toLowerCase() != "formdata") {
+    if (modeData.toLowerCase() != "formdata") {
       objMap.addAll({
         "options": {
           "raw": {"language": "json"}
-        }
+        },
+        "raw": bodyData,
+      });
+    } else {
+      objMap.addAll({
+        "formdata": bodyData,
       });
     }
 
     return objMap;
+  }
+
+  @override
+  String toString() {
+    return 'BodyModel{mode: $modeData, raw: $bodyData, formData: $formData}';
   }
 }
 
@@ -126,6 +149,11 @@ class FormDataModel {
     this.value,
     this.src,
   });
+
+  @override
+  String toString() {
+    return 'FormDataModel{key: $key, type: $type, value: $value, src: $src}';
+  }
 }
 
 class UrlModel {
@@ -134,30 +162,26 @@ class UrlModel {
 
   // for base uel
   List<String> host;
-  List<String> path;
+  String path;
 
   UrlModel({
     required this.raw,
     this.host = const [],
-    this.path = const [],
+    this.path = "",
   });
 
-  UrlModel setUpData() {
-    UrlModel? urlModel;
-
-    List<String> localeHost = [];
-    List<String> localePath = [];
-    localeHost.add(raw.split("/")[0]);
-    localePath.addAll(raw.split("/"));
-
-    return urlModel!;
-  }
-
   Map<String, dynamic> toMap() {
+    List<String> path = this.raw.split("/");
+    path.removeWhere((element) => element.isEmpty);
     return {
       'raw': this.raw,
-      'host': this.host,
-      'path': this.path,
+      'host': ["{{base_url}}"],
+      'path': path,
     };
+  }
+
+  @override
+  String toString() {
+    return 'UrlModel{raw: $raw, host: $host, path: $path}';
   }
 }
