@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import '../core/model/detail_request_code.dart';
@@ -58,13 +59,14 @@ class ReadRequestFromMethods {
             i.replaceAll("// @route", "").trim().split(" ")[1];
         detailRequestCode.requestType =
             i.replaceAll("// @route", "").trim().split(" ")[0];
-        // print('HERE ${i.replaceAll("// @route", "").trim().split(" ")[0]}');
       } else if (i.startsWith("// @param")) {
-        detailRequestCode.params = i.replaceAll("// @param", "").trim();
+        detailRequestCode.params =
+            jsonDecode(i.replaceAll("// @param", "").trim());
       } else if (i.startsWith("// @body")) {
         detailRequestCode.body = i.replaceAll("// @body", "").trim();
       } else if (i.startsWith("// @header")) {
-        detailRequestCode.header = i.replaceAll("// @header", "").trim();
+        String headers = i.replaceAll("// @header", "").trim();
+        detailRequestCode.header = jsonDecode(headers);
       } else if (i.startsWith("// @access")) {
         if (i.toLowerCase().contains("privet")) {
           detailRequestCode.access = "privet";

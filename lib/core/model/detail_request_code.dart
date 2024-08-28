@@ -1,18 +1,18 @@
 class DetailRequestCode {
   String desc;
   String route;
-  String params;
+  Map<String, dynamic> params;
   String body;
-  String header;
+  Map<String, dynamic> header;
   String access;
   String requestType;
 
   DetailRequestCode({
     this.desc = "",
     this.route = "",
-    this.params = "",
+    this.params = const {},
     this.body = "",
-    this.header = "",
+    this.header = const {},
     this.access = "",
     this.requestType = "",
   });

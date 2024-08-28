@@ -45,6 +45,8 @@ class BuildCollections {
           'formdata': i.body,
         });
       }
+      String params = "";
+      i.params.forEach((key, value) => params += "?$key=$value");
       data.addAll({"name": i.desc});
       data.addAll({
         "request": {
@@ -53,7 +55,7 @@ class BuildCollections {
           "body": bodyData,
           "url": {
             // todo : need update here
-            "raw": "{{base_url}}${i.route}",
+            "raw": "{{base_url}}${i.route}$params",
             "host": ["{{base_url}}"],
             "path": i.route.split("/"),
           },
