@@ -17,8 +17,6 @@ class DetailRequestCode {
     this.requestType = "",
   });
 
-  bool isPrivet() => access.toLowerCase().contains("privet");
-
   @override
   String toString() {
     return 'DetailRequestCode{desc: $desc, route: $route, params: $params, body: $body, header: $header, access: $access, requestType: $requestType}';

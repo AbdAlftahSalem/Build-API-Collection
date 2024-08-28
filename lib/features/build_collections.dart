@@ -46,11 +46,26 @@ class BuildCollections {
         });
       }
       String params = "";
+      Map<String, dynamic> auth = {};
       i.params.forEach((key, value) => params += "?$key=$value");
+      if (i.access.contains("privet")) {
+        auth = {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value":"",
+              "type": "string"
+            }
+          ]
+        };
+      }
+
       data.addAll({"name": i.desc});
       data.addAll({
         "request": {
           "method": i.requestType.toUpperCase(),
+          "auth": auth,
           "header": i.header,
           "body": bodyData,
           "url": {
@@ -64,40 +79,5 @@ class BuildCollections {
       print(data);
       print("**" * 50 + "\n");
     }
-
-    // _requestAdapter(allRequestsData);
   }
-
-// static List<FolderRequestCollectionModel> _requestAdapter(
-//     List<RequestData> requestsData) {
-//   for (RequestData requestDataLocal in requestsData) {
-//     for (DetailRequestCode detailRequestCode
-//         in requestDataLocal.detailRequestCode) {
-//       DetailRequest detailRequest = DetailRequest(
-//         requestName: detailRequestCode.desc,
-//         requestModel: RequestModel(
-//           method: detailRequestCode.requestType.toLowerCase() == "formdata"
-//               ? "POST"
-//               : detailRequestCode.requestType,
-//           bodyModel: BodyModel(
-//             modeData: detailRequestCode.requestType == "formdata"
-//                 ? "formdata"
-//                 : "raw",
-//             bodyData: detailRequestCode.body,
-//           ),
-//           header: [HeaderModel(type: '', key: '', value: '')],
-//           urlModel: UrlModel(raw: detailRequestCode.route),
-//         ),
-//       );
-//       FolderRequestCollectionModel folderRequestCollectionModel =
-//           FolderRequestCollectionModel(
-//         folderName: requestDataLocal.key,
-//         detailRequest: detailRequest,
-//       );
-//       print(folderRequestCollectionModel.toMap());
-//     }
-//   }
-//
-//   return [];
-// }
 }
