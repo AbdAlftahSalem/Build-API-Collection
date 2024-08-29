@@ -1,26 +1,26 @@
 class FolderRequestCollectionModel {
   String folderName;
-  DetailRequest detailRequest;
+  DetailApiRequest detailApiRequest;
 
   FolderRequestCollectionModel({
     required this.folderName,
-    required this.detailRequest,
+    required this.detailApiRequest,
   });
 
   Map<String, dynamic> toMap() {
     return {
-      'folderName': this.folderName,
-      'detailRequest': this.detailRequest,
+      'name': this.folderName,
+      'item': this.detailApiRequest.toMap(),
     };
   }
 }
 
-class DetailRequest {
+class DetailApiRequest {
   String requestName;
   RequestModel requestModel;
   List<String> response;
 
-  DetailRequest({
+  DetailApiRequest({
     required this.requestName,
     required this.requestModel,
     this.response = const [],
@@ -28,8 +28,8 @@ class DetailRequest {
 
   Map<String, dynamic> toMap() {
     return {
-      'requestName': this.requestName,
-      'requestModel': this.requestModel.toMap(),
+      'name': this.requestName,
+      'request': this.requestModel.toMap(),
       'response': this.response,
     };
   }

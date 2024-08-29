@@ -29,7 +29,7 @@ class BuildCollections {
 
     // read controllers folder name from user
     // String folderPath = ReadFolderName.readFolderName();
-    String folderPath = "C:\\Users\\hp\\Desktop\\New folder (2)";
+    String folderPath = "C:\\Users\\hp\\Desktop\\New folder (2)\\New folder";
 
     // get all dirs and files from controller folder
     List<FileSystemEntity> allFilesInDir = ReadFolderName.listFiles(folderPath);
@@ -37,6 +37,7 @@ class BuildCollections {
     // get all data from controllers files
     List<RequestData> allRequestsData =
         await ReadRequestFromMethods.getAllRequestsFromDir(allFilesInDir);
+
     List<Map<String, dynamic>> allRequestsDataAdapter = RequestsAdapter.requestsAdapter(allRequestsData);
   print(allRequestsDataAdapter);
     // for (RequestData requestData in allRequestsData) {
