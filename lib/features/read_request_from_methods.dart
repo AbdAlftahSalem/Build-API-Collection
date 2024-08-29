@@ -25,7 +25,7 @@ class ReadRequestFromMethods {
           detailRequestCode: detailsRequests,
         ));
         print(
-            "✅ Finish read '${file.split("\\")[file.split("\\").length - 1]}' success ...\n");
+            "✅ Finish read ${detailsRequests.length} request successfully 🎉 || File name : '${file.split("\\")[file.split("\\").length - 1]}'");
       }
     }
     return requestData;
@@ -42,7 +42,6 @@ class ReadRequestFromMethods {
       } else if (j.startsWith("exports.")) {
         detailRequestCode = getDetailsRequest(requestData);
         detailsRequests.add(detailRequestCode);
-        print("⚡ Read '${detailRequestCode.desc}' Request Success ...");
         detailRequestCode = DetailRequestCode();
       }
     }

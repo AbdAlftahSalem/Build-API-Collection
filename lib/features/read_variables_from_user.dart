@@ -24,7 +24,10 @@ class ReadVariablesFromUser {
       while (addMoreVariables ||
           addMoreVariablesChoice.isEmpty ||
           addMoreVariablesChoice.toLowerCase() == "y") {
-        while (variableModel.key.isEmpty) {
+        while (variableModel.key.isEmpty &&
+            variables
+                .where((element) => element.key == variableModel.key)
+                .isEmpty) {
           stdout.write("Enter the key of variable : ");
           variableModel.key = (stdin.readLineSync() ?? "")
               .trim()
