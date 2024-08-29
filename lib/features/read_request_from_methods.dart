@@ -39,7 +39,7 @@ class ReadRequestFromMethods {
     for (String j in contentsList) {
       if (j.startsWith("// @")) {
         requestData.add(j);
-      } else if (j.startsWith("exports.")) {
+      } else if (j.startsWith("exports.") && requestData.isNotEmpty) {
         detailRequestCode = getDetailsRequest(requestData);
         detailsRequests.add(detailRequestCode);
         detailRequestCode = DetailRequestCode();
