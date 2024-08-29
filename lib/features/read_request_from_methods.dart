@@ -26,6 +26,12 @@ class ReadRequestFromMethods {
         ));
         print(
             "✅ Finish read ${detailsRequests.length} request successfully 🎉 || File name : '${file.split("\\")[file.split("\\").length - 1]}'");
+      } else if (i.toString().toLowerCase().startsWith("directory")) {
+        Directory directory = Directory(i.path);
+        List<FileSystemEntity> subFilesInSubFolder = await directory.listSync();
+        List<RequestData> outputData =
+            await getAllRequestsFromDir(subFilesInSubFolder);
+        requestData.addAll(outputData);
       }
     }
     return requestData;
