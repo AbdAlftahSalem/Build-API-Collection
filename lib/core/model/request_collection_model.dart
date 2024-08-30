@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class FolderRequestCollectionModel {
   String folderName;
-  DetailApiRequest detailApiRequest;
+  List<DetailApiRequest> detailApiRequest;
 
   FolderRequestCollectionModel({
     required this.folderName,
@@ -12,7 +12,7 @@ class FolderRequestCollectionModel {
   Map<String, dynamic> toMap() {
     return {
       'name': this.folderName,
-      'item': this.detailApiRequest.toMap(),
+      'item': this.detailApiRequest,
     };
   }
 }
@@ -99,19 +99,14 @@ class BodyModel {
   String modeData;
   String bodyData;
   List<FormDataModel> formData;
+  AuthModel? authModel;
 
   BodyModel({
     required this.modeData,
     this.bodyData = '',
     this.formData = const [],
+    this.authModel,
   });
-
-  String updateRawValue() {
-    String newRaw = bodyData.replaceAll("{", "{\r\n    ");
-    newRaw = newRaw.replaceAll('"', '\"');
-    newRaw = newRaw.replaceAll("}", "\r\n}");
-    return newRaw;
-  }
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> objMap = {
@@ -169,18 +164,30 @@ class FormDataModel {
   String toString() {
     return 'FormDataModel{key: $key, type: $type, value: $value, src: $src}';
   }
+}
+
+class AuthModel {
+  String type;
+  List<AuthData> authModels;
+
+  AuthModel({this.type = "bearer", this.authModels = const []});
+}
+
+class AuthData {
+  String key, value, type;
+
+  AuthData({
+    required this.key,
+    required this.value,
+    required this.type,
+  });
 
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> result = {};
-    result.addAll({"key": "name"});
-
-    return result;
-    // return {
-    //   'key': this.key,
-    //   'type': this.type,
-    //   'value': this.value,
-    //   'src': this.src,
-    // };
+    return {
+      'key': this.key,
+      'value': this.value,
+      'type': this.type,
+    };
   }
 }
 

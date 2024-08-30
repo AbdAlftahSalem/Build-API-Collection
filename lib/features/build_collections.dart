@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import '../core/model/api_collection_model.dart';
+import '../core/model/request_collection_model.dart';
 import '../core/model/request_data.dart';
 import './read_folder_name.dart';
 import './read_request_from_methods.dart';
@@ -34,13 +35,13 @@ class BuildCollections {
     List<RequestData> allRequestsData =
         await ReadRequestFromMethods.getAllRequestsFromDir(allFilesInDir);
 
-    List<Map<String, dynamic>> allRequestsDataAdapter =
+    List<DetailApiRequest> allRequestsDataAdapter =
         RequestsAdapter.requestsAdapter(allRequestsData);
     allRequestsDataAdapter.forEach((element) {
-      // print(element);
-      print(element['name']);
-      print(element['request']['header']);
-      print("${element['request']['body']}\n");
+      print("Name      : ${element.requestName}");
+      print("Body data : ${element.requestModel.bodyModel}");
+      print("Headers   : ${element.requestModel.header}");
+      print("URL       : ${element.requestModel.urlModel}\n");
     });
     // for (RequestData requestData in allRequestsData) {
     //   for (DetailRequestCode detailRequest in requestData.detailRequestCode) {
