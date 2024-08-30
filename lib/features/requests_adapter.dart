@@ -3,7 +3,7 @@ import '../core/model/request_collection_model.dart';
 import '../core/model/request_data.dart';
 
 class RequestsAdapter {
-  static List<DetailApiRequest> requestsAdapter(
+  static List<FolderRequestCollectionModel> requestsAdapter(
       List<RequestData> allRequestsData) {
     List<DetailApiRequest> allRequestsDataAdapter = [];
     List<DetailApiRequest> allRequestsDataAdapterLocal = [];
@@ -54,7 +54,7 @@ class RequestsAdapter {
       }
       allRequestsDataAdapter.addAll(allRequestsDataAdapterLocal);
       folderRequestCollectionModel.add(FolderRequestCollectionModel(
-        folderName: '',
+        folderName: requestData.key,
         detailApiRequest: allRequestsDataAdapter,
       ));
       // for (int i = 0; i < allRequestsDataAdapterLocal.length; ++i) {
@@ -62,9 +62,10 @@ class RequestsAdapter {
       //     "   ${i + 1} - ${allRequestsDataAdapterLocal[i]} || ${allRequestsDataAdapterLocal[i]['request']['method']} || ${allRequestsDataAdapter[i]['request']['url']['raw']}");
       // }
       allRequestsDataAdapterLocal = [];
+      allRequestsDataAdapter = [];
     }
 
-    return allRequestsDataAdapter;
+    return folderRequestCollectionModel;
   }
 
   static List<HeaderModel> headersAdapter(DetailRequestCode detailRequest) {

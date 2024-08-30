@@ -35,8 +35,11 @@ class BuildCollections {
     List<RequestData> allRequestsData =
         await ReadRequestFromMethods.getAllRequestsFromDir(allFilesInDir);
 
-    List<DetailApiRequest> allRequestsDataAdapter =
+    List<FolderRequestCollectionModel> allRequestsDataAdapter =
         RequestsAdapter.requestsAdapter(allRequestsData);
+
+    apiCollectionModel.requestCollectionModel = allRequestsDataAdapter;
+
     allRequestsDataAdapter.forEach((element) {
       print(element.toMap());
       // print("\nName      : ${element.requestName}");
