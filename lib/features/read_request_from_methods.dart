@@ -49,6 +49,7 @@ class ReadRequestFromMethods {
         detailRequestCode = getDetailsRequest(requestData);
         detailsRequests.add(detailRequestCode);
         detailRequestCode = DetailRequestCode();
+        requestData = [];
       }
     }
     return detailsRequests;

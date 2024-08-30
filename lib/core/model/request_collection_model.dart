@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class FolderRequestCollectionModel {
   String folderName;
   DetailApiRequest detailApiRequest;
@@ -76,7 +78,7 @@ class HeaderModel {
   HeaderModel({
     required this.key,
     required this.value,
-    required this.type,
+    this.type = "text",
   });
 
   Map<String, dynamic> toMap() {
@@ -117,14 +119,27 @@ class BodyModel {
     };
     if (modeData.toLowerCase() != "formdata") {
       objMap.addAll({
+        "raw": jsonDecode(bodyData.isEmpty ? "{}" : bodyData),
         "options": {
           "raw": {"language": "json"}
         },
-        "raw": bodyData,
       });
     } else {
+      List<dynamic> formDataMap = jsonDecode(bodyData);
+      List<FormDataModel> formDataList = [];
+      formDataMap.forEach((element) {
+        FormDataModel formDataModel = FormDataModel(
+          key: element['key'],
+          type: element['type'],
+          value: element.containsKey("value") ? element['value'] : "",
+          src: element.containsKey("src") ? element['src'] : "",
+        );
+        print(formDataModel.toString());
+        formDataList.add(formDataModel);
+      });
+
       objMap.addAll({
-        "formdata": bodyData,
+        "formdata": formDataList,
       });
     }
 
@@ -153,6 +168,19 @@ class FormDataModel {
   @override
   String toString() {
     return 'FormDataModel{key: $key, type: $type, value: $value, src: $src}';
+  }
+
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> result = {};
+    result.addAll({"key": "name"});
+
+    return result;
+    // return {
+    //   'key': this.key,
+    //   'type': this.type,
+    //   'value': this.value,
+    //   'src': this.src,
+    // };
   }
 }
 
