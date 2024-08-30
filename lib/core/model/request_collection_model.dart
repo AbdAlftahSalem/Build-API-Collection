@@ -99,13 +99,13 @@ class BodyModel {
   String modeData;
   String bodyData;
   List<FormDataModel> formData;
-  AuthModel? authModel;
+  AuthModel authModel;
 
   BodyModel({
     required this.modeData,
+    required this.authModel,
     this.bodyData = '',
     this.formData = const [],
-    this.authModel,
   });
 
   Map<String, dynamic> toMap() {
@@ -137,7 +137,7 @@ class BodyModel {
         "formdata": formDataList,
       });
     }
-
+    objMap.addAll({"auth" : authModel.toMap()});
     return objMap;
   }
 
@@ -171,6 +171,13 @@ class AuthModel {
   List<AuthData> authModels;
 
   AuthModel({this.type = "bearer", this.authModels = const []});
+
+  Map<String, dynamic> toMap() {
+    return {
+      'type': this.type,
+      'authModels': this.authModels,
+    };
+  }
 }
 
 class AuthData {
@@ -208,6 +215,7 @@ class UrlModel {
   Map<String, dynamic> toMap() {
     List<String> path = this.raw.split("/");
     path.removeWhere((element) => element.isEmpty);
+    path.removeAt(0);
     return {
       'raw': this.raw,
       'host': ["{{base_url}}"],

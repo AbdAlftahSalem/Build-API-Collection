@@ -3,10 +3,10 @@ import '../core/model/request_collection_model.dart';
 import '../core/model/request_data.dart';
 
 class RequestsAdapter {
-  static List<DetailApiRequest> requestsAdapter(List<RequestData> allRequestsData) {
+  static List<DetailApiRequest> requestsAdapter(
+      List<RequestData> allRequestsData) {
     List<DetailApiRequest> allRequestsDataAdapter = [];
     List<DetailApiRequest> allRequestsDataAdapterLocal = [];
-
     List<FolderRequestCollectionModel> folderRequestCollectionModel = [];
 
     for (RequestData requestData in allRequestsData) {
@@ -14,20 +14,23 @@ class RequestsAdapter {
         late RequestModel requestModel;
         List<HeaderModel> headerModel = [];
         late BodyModel bodyModel;
+        AuthModel authModel = AuthModel();
         late UrlModel urlModel;
 
         String params = "";
 
         headerModel = headersAdapter(detailRequest);
         urlModel = UrlModel(raw: "{{base_url}}${detailRequest.route}$params");
+        if (detailRequest.access.contains("privet")) {
+          authModel = AuthModel(type: "bearer" , authModels: [AuthData(key: "token", value: "e", type: "string")]);
+        }
         bodyModel = BodyModel(
-            modeData: detailRequest.requestType, bodyData: detailRequest.body);
+          modeData: detailRequest.requestType,
+          bodyData: detailRequest.body,
+          authModel: authModel,
+        );
 
         detailRequest.params.forEach((key, value) => params += "?$key=$value");
-
-        if (detailRequest.access.contains("privet")) {
-          bodyModel.authModel = AuthModel(type: "bearer");
-        }
 
         requestModel = RequestModel(
           method: detailRequest.requestType,
@@ -35,7 +38,8 @@ class RequestsAdapter {
           bodyModel: bodyModel,
           urlModel: urlModel,
         );
-        DetailApiRequest detailApiRequest = DetailApiRequest(requestName: detailRequest.desc, requestModel: requestModel);
+        DetailApiRequest detailApiRequest = DetailApiRequest(
+            requestName: detailRequest.desc, requestModel: requestModel);
         // singleRequestData.addAll({"name": detailRequest.desc});
         // singleRequestData.addAll({
         //   "request": {
@@ -49,8 +53,6 @@ class RequestsAdapter {
         allRequestsDataAdapterLocal.add(detailApiRequest);
       }
       allRequestsDataAdapter.addAll(allRequestsDataAdapterLocal);
-      print(
-          "\n* '${requestData.key}' requests || ${allRequestsDataAdapterLocal.length} requests");
       folderRequestCollectionModel.add(FolderRequestCollectionModel(
         folderName: '',
         detailApiRequest: allRequestsDataAdapter,

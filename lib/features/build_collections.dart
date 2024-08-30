@@ -26,7 +26,7 @@ class BuildCollections {
 
     // read controllers folder name from user
     // String folderPath = ReadFolderName.readFolderName();
-    String folderPath = "C:\\Users\\hp\\Desktop\\New folder (2)\\New folder";
+    String folderPath = "C:\\Users\\hp\\Desktop\\New folder (2)";
 
     // get all dirs and files from controller folder
     List<FileSystemEntity> allFilesInDir = ReadFolderName.listFiles(folderPath);
@@ -38,10 +38,12 @@ class BuildCollections {
     List<DetailApiRequest> allRequestsDataAdapter =
         RequestsAdapter.requestsAdapter(allRequestsData);
     allRequestsDataAdapter.forEach((element) {
-      print("Name      : ${element.requestName}");
-      print("Body data : ${element.requestModel.bodyModel}");
-      print("Headers   : ${element.requestModel.header}");
-      print("URL       : ${element.requestModel.urlModel}\n");
+      print(element.toMap());
+      // print("\nName      : ${element.requestName}");
+      // print("Body data : ${element.requestModel.bodyModel.toMap()}");
+      // print("AUTH data : ${element.requestModel.bodyModel.authModel.toMap()}");
+      // print("Headers   : ${element.requestModel.header}");
+      // print("URL       : ${element.requestModel.urlModel.toMap()}");
     });
     // for (RequestData requestData in allRequestsData) {
     //   for (DetailRequestCode detailRequest in requestData.detailRequestCode) {
