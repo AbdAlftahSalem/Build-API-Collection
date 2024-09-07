@@ -25,7 +25,7 @@ class ReadRequestFromMethods {
           detailRequestCode: detailsRequests,
         ));
         print(
-            "✅ Finish read ${detailsRequests.length} request successfully 🎉 || File name : '${file.split("\\")[file.split("\\").length - 1]}'");
+            "✅ File : '${file.split("\\")[file.split("\\").length - 1]}' || Finish read ${detailsRequests.length} request successfully 🎉");
       } else if (i.toString().toLowerCase().startsWith("directory")) {
         Directory directory = Directory(i.path);
         List<FileSystemEntity> subFilesInSubFolder = await directory.listSync();

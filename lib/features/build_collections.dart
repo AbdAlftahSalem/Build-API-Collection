@@ -41,7 +41,9 @@ class BuildCollections {
     apiCollectionModel.requestCollectionModel = allRequestsDataAdapter;
 
     allRequestsDataAdapter.forEach((element) {
-      print(element.toMap());
+      element.detailApiRequest.forEach((element2) {
+        print("detailApiRequest : ${element2.toMap()}");
+      });
       // print("\nName      : ${element.requestName}");
       // print("Body data : ${element.requestModel.bodyModel.toMap()}");
       // print("AUTH data : ${element.requestModel.bodyModel.authModel.toMap()}");

@@ -129,7 +129,6 @@ class BodyModel {
           value: element.containsKey("value") ? element['value'] : "",
           src: element.containsKey("src") ? element['src'] : "",
         );
-        print(formDataModel.toString());
         formDataList.add(formDataModel);
       });
 
