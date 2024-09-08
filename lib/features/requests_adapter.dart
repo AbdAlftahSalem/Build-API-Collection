@@ -14,7 +14,7 @@ class RequestsAdapter {
         late RequestModel requestModel;
         List<HeaderModel> headerModel = [];
         late BodyModel bodyModel;
-        AuthModel authModel = AuthModel();
+        AuthModel authModel = AuthModel(authModels: []);
         late UrlModel urlModel;
 
         String params = "";
@@ -22,7 +22,9 @@ class RequestsAdapter {
         headerModel = headersAdapter(detailRequest);
         urlModel = UrlModel(raw: "{{base_url}}${detailRequest.route}$params");
         if (detailRequest.access.contains("privet")) {
-          authModel = AuthModel(type: "bearer" , authModels: [AuthData(key: "token", value: "e", type: "string")]);
+          authModel.type = "bearer";
+          print(detailRequest.variableSecret);
+          authModel.authModels = [AuthData(key: "detailRequest.variableSecret", value: "e", type: "string").toMap()];
         }
         bodyModel = BodyModel(
           modeData: detailRequest.requestType,

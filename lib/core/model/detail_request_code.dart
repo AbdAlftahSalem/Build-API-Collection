@@ -5,6 +5,7 @@ class DetailRequestCode {
   String body;
   Map<String, dynamic> header;
   String access;
+  String variableSecret;
   String requestType;
 
   DetailRequestCode({
@@ -14,6 +15,7 @@ class DetailRequestCode {
     this.body = "",
     this.header = const {},
     this.access = "",
+    this.variableSecret = "",
     this.requestType = "",
   });
 

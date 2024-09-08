@@ -190,9 +190,9 @@ class FormDataModel {
 
 class AuthModel {
   String type;
-  List<AuthData> authModels;
+  List<Map<String, dynamic>> authModels;
 
-  AuthModel({this.type = "bearer", this.authModels = const []});
+  AuthModel({this.type = "bearer", required this.authModels});
 
   Map<String, dynamic> toMap() {
     return {
