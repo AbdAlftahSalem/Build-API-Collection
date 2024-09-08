@@ -42,7 +42,8 @@ class BuildCollections {
 
     allRequestsDataAdapter.forEach((element) {
       element.detailApiRequest.forEach((element2) {
-        print("detailApiRequest : ${element2.toMap()}");
+        DetailApiRequest detailApiRequest = element2;
+        print("detailApiRequest : ${detailApiRequest.toMap()}");
       });
       // print("\nName      : ${element.requestName}");
       // print("Body data : ${element.requestModel.bodyModel.toMap()}");

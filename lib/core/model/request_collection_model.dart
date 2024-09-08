@@ -56,12 +56,13 @@ class RequestModel {
   });
 
   Map<String, dynamic> toMap() {
-    return {
-      'method': this.method,
-      'header': this.header,
-      'bodyModel': this.bodyModel.toMap(),
-      'urlModel': this.urlModel.toMap(),
-    };
+    Map<String, dynamic> data = {"method": method};
+
+    if (header.isNotEmpty) data.addAll({'header': header});
+
+    if (bodyModel.bodyData.isNotEmpty) data.addAll({'body': bodyModel.toMap()});
+
+    return data;
   }
 
   @override
@@ -120,23 +121,36 @@ class BodyModel {
         },
       });
     } else {
-      List<dynamic> formDataMap = jsonDecode(bodyData);
-      List<FormDataModel> formDataList = [];
-      formDataMap.forEach((element) {
+      Map<String, dynamic> formDataMap = jsonDecode(bodyData);
+      List<Map<String, dynamic>> formDataList = [];
+      if (!formDataMap.containsKey("option")) {
+        formDataMap.addAll({
+          "option": {"files_key": []}
+        });
+      }
+      formDataMap.forEach((key, value) {
+        // print("Key is : $key");
+        // print("Value is : $value");
         FormDataModel formDataModel = FormDataModel(
-          key: element['key'],
-          type: element['type'],
-          value: element.containsKey("value") ? element['value'] : "",
-          src: element.containsKey("src") ? element['src'] : "",
+          key: key,
+          type: (formDataMap['option']['files_key'] as List).contains(key)
+              ? "file"
+              : "text",
+          value: (formDataMap['option']['files_key'] as List).contains(key)
+              ? ""
+              : value.toString(),
+          src: (formDataMap['option']['files_key'] as List).contains(key)
+              ? value.toString()
+              : "",
         );
-        formDataList.add(formDataModel);
+        formDataList.add(formDataModel.toMap());
       });
 
       objMap.addAll({
         "formdata": formDataList,
       });
     }
-    objMap.addAll({"auth" : authModel.toMap()});
+    objMap.addAll({"auth": authModel.toMap()});
     return objMap;
   }
 
@@ -158,6 +172,15 @@ class FormDataModel {
     this.value,
     this.src,
   });
+
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> data = {"key": key, "type": type};
+
+    if ((value ?? "").isNotEmpty) data.addAll({"value": value});
+    if ((src ?? "").isNotEmpty) data.addAll({"src": src});
+
+    return data;
+  }
 
   @override
   String toString() {
