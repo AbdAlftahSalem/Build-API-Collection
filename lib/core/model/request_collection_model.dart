@@ -56,7 +56,7 @@ class RequestModel {
   });
 
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> data = {"method": method};
+    Map<String, dynamic> data = {"method": method, "url" : urlModel.toMap()};
 
     if (header.isNotEmpty) data.addAll({'header': header});
 
