@@ -47,20 +47,24 @@ class RequestModel {
   List<HeaderModel> header;
   BodyModel bodyModel;
   UrlModel urlModel;
+  AuthModel? authModel;
 
   RequestModel({
     required this.method,
     required this.header,
     required this.bodyModel,
     required this.urlModel,
+    this.authModel,
   });
 
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> data = {"method": method, "url" : urlModel.toMap()};
+    Map<String, dynamic> data = {"method": method, "url": urlModel.toMap()};
 
     if (header.isNotEmpty) data.addAll({'header': header});
 
     if (bodyModel.bodyData.isNotEmpty) data.addAll({'body': bodyModel.toMap()});
+
+    if (authModel != null) data.addAll({"auth": authModel!.toMap()});
 
     return data;
   }
@@ -100,11 +104,9 @@ class BodyModel {
   String modeData;
   String bodyData;
   List<FormDataModel> formData;
-  AuthModel authModel;
 
   BodyModel({
     required this.modeData,
-    required this.authModel,
     this.bodyData = '',
     this.formData = const [],
   });
@@ -150,7 +152,6 @@ class BodyModel {
         "formdata": formDataList,
       });
     }
-    objMap.addAll({"auth": authModel.toMap()});
     return objMap;
   }
 

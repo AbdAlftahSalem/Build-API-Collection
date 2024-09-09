@@ -76,8 +76,6 @@ class ReadRequestFromMethods {
       } else if (i.startsWith("// @access")) {
         if (i.toLowerCase().contains("privet")) {
           detailRequestCode.access = "privet";
-          detailRequestCode.variableSecret =
-              i.contains("||") && !i.endsWith("||") ? i.split("||").last : "";
         } else {
           detailRequestCode.access = "public";
         }

@@ -23,13 +23,13 @@ class RequestsAdapter {
         urlModel = UrlModel(raw: "{{base_url}}${detailRequest.route}$params");
         if (detailRequest.access.contains("privet")) {
           authModel.type = "bearer";
-          print(detailRequest.variableSecret);
-          authModel.authModels = [AuthData(key: "detailRequest.variableSecret", value: "e", type: "string").toMap()];
+          authModel.authModels = [
+            AuthData(key: "token", value: "e", type: "string").toMap()
+          ];
         }
         bodyModel = BodyModel(
           modeData: detailRequest.requestType,
           bodyData: detailRequest.body,
-          authModel: authModel,
         );
 
         detailRequest.params.forEach((key, value) => params += "?$key=$value");
@@ -39,19 +39,11 @@ class RequestsAdapter {
           header: headerModel,
           bodyModel: bodyModel,
           urlModel: urlModel,
+          authModel: authModel,
         );
         DetailApiRequest detailApiRequest = DetailApiRequest(
             requestName: detailRequest.desc, requestModel: requestModel);
-        // singleRequestData.addAll({"name": detailRequest.desc});
-        // singleRequestData.addAll({
-        //   "request": {
-        //     "method": detailRequest.requestType.toUpperCase(),
-        //     "auth": auth,
-        //     "header": headerModel,
-        //     "body": bodyData,
-        //     "url": urlModel.toMap(),
-        //   }
-        // });
+
         allRequestsDataAdapterLocal.add(detailApiRequest);
       }
       allRequestsDataAdapter.addAll(allRequestsDataAdapterLocal);
@@ -59,9 +51,26 @@ class RequestsAdapter {
         folderName: requestData.key,
         detailApiRequest: allRequestsDataAdapter,
       ));
+
+      // print("✅ ${requestData.key}");
       // for (int i = 0; i < allRequestsDataAdapterLocal.length; ++i) {
-      // print(
-      //     "   ${i + 1} - ${allRequestsDataAdapterLocal[i]} || ${allRequestsDataAdapterLocal[i]['request']['method']} || ${allRequestsDataAdapter[i]['request']['url']['raw']}");
+      //   String printMessage =
+      //       "   Request name      : ${allRequestsDataAdapterLocal[i].requestName}\n";
+      //   printMessage +=
+      //       "   Request URL       : ${allRequestsDataAdapterLocal[i].requestModel.urlModel.raw}\n";
+      //   printMessage +=
+      //       "   Request method    : ${allRequestsDataAdapterLocal[i].requestModel.method}\n";
+      //   printMessage +=
+      //       "   Request Body      : ${allRequestsDataAdapterLocal[i].requestModel.bodyModel}\n";
+      //   printMessage +=
+      //       "   Request Headers   : ${allRequestsDataAdapterLocal[i].requestModel.header}\n";
+      //   printMessage +=
+      //       "   Request auth      : ${allRequestsDataAdapterLocal[i].requestModel.authModel?.toMap()}\n ${allRequestsDataAdapterLocal.length - 1 == i ? "\n" : ""}";
+      //
+      //   print(printMessage);
+      //   if (allRequestsDataAdapterLocal.length - 1 == i) {
+      //     print("\n");
+      //   }
       // }
       allRequestsDataAdapterLocal = [];
       allRequestsDataAdapter = [];

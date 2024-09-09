@@ -5,7 +5,6 @@ class DetailRequestCode {
   String body;
   Map<String, dynamic> header;
   String access;
-  String variableSecret;
   String requestType;
 
   DetailRequestCode({
@@ -15,12 +14,6 @@ class DetailRequestCode {
     this.body = "",
     this.header = const {},
     this.access = "",
-    this.variableSecret = "",
     this.requestType = "",
   });
-
-  @override
-  String toString() {
-    return 'DetailRequestCode{desc: $desc, route: $route, params: $params, body: $body, header: $header, access: $access, requestType: $requestType}';
-  }
 }
