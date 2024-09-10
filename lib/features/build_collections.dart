@@ -40,69 +40,13 @@ class BuildCollections {
 
     apiCollectionModel.requestCollectionModel = allRequestsDataAdapter;
 
-    allRequestsDataAdapter.forEach((element) {
-      element.detailApiRequest.forEach((element2) {
-        DetailApiRequest detailApiRequest = element2;
-        print("detailApiRequest : ${detailApiRequest.toMap()}");
+    allRequestsDataAdapter.forEach((folderRequest) {
+      print("⚡ '${folderRequest.folderName}' requests : ");
+      folderRequest.detailApiRequest.forEach((detailApiRequest) {
+        print(
+            "   ✅ ${detailApiRequest.requestName} || Method : ${detailApiRequest.requestModel.method} || Route : ${detailApiRequest.requestModel.urlModel.raw}");
       });
-      // print("\nName      : ${element.requestName}");
-      // print("Body data : ${element.requestModel.bodyModel.toMap()}");
-      // print("AUTH data : ${element.requestModel.bodyModel.authModel.toMap()}");
-      // print("Headers   : ${element.requestModel.header}");
-      // print("URL       : ${element.requestModel.urlModel.toMap()}");
+      print("\n");
     });
-    // for (RequestData requestData in allRequestsData) {
-    //   for (DetailRequestCode detailRequest in requestData.detailRequestCode) {
-    //     Map<String, dynamic> singleRequestData = {};
-    //     Map<String, dynamic> bodyData = {};
-    //     if (!detailRequest.requestType.contains("form")) {
-    //       bodyData.addAll({
-    //         "mode": "raw",
-    //         'raw': detailRequest.body,
-    //         "options": {
-    //           "raw": {"language": "json"}
-    //         }
-    //       });
-    //     } else {
-    //       bodyData.addAll({
-    //         "mode": "formdata",
-    //         'formdata': detailRequest.body,
-    //       });
-    //     }
-    //     String params = "";
-    //     Map<String, dynamic> auth = {};
-    //     detailRequest.params.forEach((key, value) => params += "?$key=$value");
-    //     if (detailRequest.access.contains("privet")) {
-    //       auth = {
-    //         "type": "bearer",
-    //         "bearer": [
-    //           {"key": "token", "value": "", "type": "string"}
-    //         ]
-    //       };
-    //     }
-    //
-    //     singleRequestData.addAll({"name": detailRequest.desc});
-    //     singleRequestData.addAll({
-    //       "request": {
-    //         "method": detailRequest.requestType.toUpperCase(),
-    //         "auth": auth,
-    //         "header": detailRequest.header,
-    //         "body": bodyData,
-    //         "url": {
-    //           "raw": "{{base_url}}${detailRequest.route}$params",
-    //           "host": ["{{base_url}}"],
-    //           "path": detailRequest.route.split("/"),
-    //         },
-    //       }
-    //     });
-    //     allRequestsDataAdapter.add(singleRequestData);
-    //   }
-    //   print(
-    //       "\n* '${requestData.key}' requests || ${allRequestsDataAdapter.length} requests");
-    //   for (int i = 0; i < allRequestsDataAdapter.length; ++i) {
-    //     print("   ${i + 1} - ${allRequestsDataAdapter[i]['name']} || ${allRequestsDataAdapter[i]['request']['method']} || ${allRequestsDataAdapter[i]['request']['url']['raw']}");
-    //   }
-    // allRequestsDataAdapter = [];
-    // }
   }
 }

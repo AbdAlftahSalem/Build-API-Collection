@@ -35,11 +35,6 @@ class DetailApiRequest {
       'response': this.response,
     };
   }
-
-  @override
-  String toString() {
-    return 'DetailRequest {requestName: $requestName, requestModel: $requestModel, response: $response}';
-  }
 }
 
 class RequestModel {
@@ -68,11 +63,6 @@ class RequestModel {
 
     return data;
   }
-
-  @override
-  String toString() {
-    return 'RequestModel{method: $method, header: $header, bodyModel: $bodyModel, urlModel: $urlModel}';
-  }
 }
 
 class HeaderModel {
@@ -93,46 +83,36 @@ class HeaderModel {
       'type': this.type,
     };
   }
-
-  @override
-  String toString() {
-    return 'HeaderModel{key: $key, value: $value, type: $type}';
-  }
 }
 
 class BodyModel {
   String modeData;
   String bodyData;
-  List<FormDataModel> formData;
+  Map<String, dynamic> raw;
+  Map<String, dynamic> options;
+  List<FormDataModel>? formData;
 
-  BodyModel({
-    required this.modeData,
-    this.bodyData = '',
-    this.formData = const [],
-  });
-
-  Map<String, dynamic> toMap() {
-    Map<String, dynamic> objMap = {
-      'mode': modeData,
-    };
+  BodyModel(
+      {required this.modeData,
+      this.bodyData = '',
+      this.formData,
+      this.raw = const {},
+      this.options = const {}}) {
     if (modeData.toLowerCase() != "formdata") {
-      objMap.addAll({
-        "raw": jsonDecode(bodyData.isEmpty ? "{}" : bodyData),
-        "options": {
-          "raw": {"language": "json"}
-        },
-      });
+      raw = jsonDecode(bodyData.isEmpty ? "{}" : bodyData);
+      options = {
+        "raw": {"language": "json"}
+      };
     } else {
       Map<String, dynamic> formDataMap = jsonDecode(bodyData);
-      List<Map<String, dynamic>> formDataList = [];
+      formData = [];
       if (!formDataMap.containsKey("option")) {
         formDataMap.addAll({
           "option": {"files_key": []}
         });
       }
+
       formDataMap.forEach((key, value) {
-        // print("Key is : $key");
-        // print("Value is : $value");
         FormDataModel formDataModel = FormDataModel(
           key: key,
           type: (formDataMap['option']['files_key'] as List).contains(key)
@@ -145,19 +125,20 @@ class BodyModel {
               ? value.toString()
               : "",
         );
-        formDataList.add(formDataModel.toMap());
-      });
-
-      objMap.addAll({
-        "formdata": formDataList,
+        formData!.add(formDataModel);
       });
     }
-    return objMap;
   }
 
-  @override
-  String toString() {
-    return 'BodyModel{mode: $modeData, raw: $bodyData, formData: $formData}';
+  Map<String, dynamic> toMap() {
+    Map<String, dynamic> objMap = {'mode': modeData};
+
+    if (modeData.toLowerCase() != "formdata") {
+      objMap.addAll({"raw": raw, "options": options});
+    } else
+      objMap.addAll({"formdata": formData});
+
+    return objMap;
   }
 }
 
@@ -182,11 +163,6 @@ class FormDataModel {
 
     return data;
   }
-
-  @override
-  String toString() {
-    return 'FormDataModel{key: $key, type: $type, value: $value, src: $src}';
-  }
 }
 
 class AuthModel {
@@ -198,7 +174,7 @@ class AuthModel {
   Map<String, dynamic> toMap() {
     return {
       'type': this.type,
-      'authModels': this.authModels,
+      'auth': this.authModels,
     };
   }
 }
@@ -222,32 +198,30 @@ class AuthData {
 }
 
 class UrlModel {
-  // end point
   String raw;
-
-  // for base uel
   List<String> host;
-  String path;
+  List<String> path;
 
   UrlModel({
     required this.raw,
     this.host = const [],
-    this.path = "",
-  });
+    this.path = const [],
+  }) {
+    host = ["{{base_url}}"];
+    setupPathValue();
+  }
 
-  Map<String, dynamic> toMap() {
-    List<String> path = this.raw.split("/");
+  setupPathValue() {
+    path = this.raw.split("/");
     path.removeWhere((element) => element.isEmpty);
     path.removeAt(0);
+  }
+
+  Map<String, dynamic> toMap() {
     return {
       'raw': this.raw,
       'host': ["{{base_url}}"],
       'path': path,
     };
-  }
-
-  @override
-  String toString() {
-    return 'UrlModel{raw: $raw, host: $host, path: $path}';
   }
 }
