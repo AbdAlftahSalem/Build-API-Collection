@@ -15,6 +15,11 @@ class FolderRequestCollectionModel {
       'item': this.detailApiRequest,
     };
   }
+
+  @override
+  String toString() {
+    return 'Folder Request Collection {folderName: $folderName, detailApiRequest: $detailApiRequest}';
+  }
 }
 
 class DetailApiRequest {
@@ -34,6 +39,11 @@ class DetailApiRequest {
       'request': this.requestModel.toMap(),
       'response': this.response,
     };
+  }
+
+  @override
+  String toString() {
+    return 'Detail Api Request {requestName: $requestName, requestModel: $requestModel, response: $response}';
   }
 }
 
@@ -63,6 +73,11 @@ class RequestModel {
 
     return data;
   }
+
+  @override
+  String toString() {
+    return 'Request {method: $method, header: $header, bodyModel: $bodyModel, urlModel: $urlModel, authModel: $authModel}';
+  }
 }
 
 class HeaderModel {
@@ -82,6 +97,11 @@ class HeaderModel {
       'value': this.value,
       'type': this.type,
     };
+  }
+
+  @override
+  String toString() {
+    return 'Header {key: $key, value: $value, type: $type}';
   }
 }
 
@@ -140,6 +160,11 @@ class BodyModel {
 
     return objMap;
   }
+
+  @override
+  String toString() {
+    return 'Body {modeData: $modeData, bodyData: $bodyData, raw: $raw, options: $options, formData: $formData}';
+  }
 }
 
 class FormDataModel {
@@ -163,6 +188,11 @@ class FormDataModel {
 
     return data;
   }
+
+  @override
+  String toString() {
+    return 'Form Data {key: $key, type: $type, value: $value, src: $src}';
+  }
 }
 
 class AuthModel {
@@ -176,6 +206,11 @@ class AuthModel {
       'type': this.type,
       'auth': this.authModels,
     };
+  }
+
+  @override
+  String toString() {
+    return 'Auth {type: $type, authModels: $authModels}';
   }
 }
 
@@ -194,6 +229,11 @@ class AuthData {
       'value': this.value,
       'type': this.type,
     };
+  }
+
+  @override
+  String toString() {
+    return 'Auth Data {key: $key, value: $value, type: $type}';
   }
 }
 
@@ -223,5 +263,10 @@ class UrlModel {
       'host': ["{{base_url}}"],
       'path': path,
     };
+  }
+
+  @override
+  String toString() {
+    return 'Url {raw: $raw, host: $host, path: $path}';
   }
 }

@@ -14,4 +14,9 @@ class InfoModel {
           "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     };
   }
+
+  @override
+  String toString() {
+    return 'Info collection {collectionName: $collectionName, baseUrl: $baseUrl}';
+  }
 }

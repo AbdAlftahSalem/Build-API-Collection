@@ -8,6 +8,6 @@ class RequestData {
 
   @override
   String toString() {
-    return 'RequestData{key: $key, detailRequestCode: $detailRequestCode}';
+    return 'Request Data {key: $key, detailRequestCode: $detailRequestCode}';
   }
 }

@@ -13,6 +13,6 @@ class VariableModel {
 
   @override
   String toString() {
-    return 'VariableModel{key: $key, value: $value}';
+    return 'Variable {key: $key, value: $value}';
   }
 }
