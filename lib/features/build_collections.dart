@@ -28,8 +28,7 @@ class BuildCollections {
       value: apiCollectionModel.infoCollection?.baseUrl,
     ));
 
-    // String folderPath = ReadFolderName.readFolderName();
-    String folderPath = "C:\\Users\\hp\\Desktop\\New folder (2)";
+    String folderPath = await ReadFolderName.readFolderName();
 
     // get all dirs and files from controller folder
     List<FileSystemEntity> allFilesInDir = ReadFolderName.listFiles(folderPath);
@@ -45,6 +44,6 @@ class BuildCollections {
 
     PrintRequestData.printRequestData(allRequestsAdapter);
     print("\n\n⚡ FINISH BUILD API COLLECTION SUCCESSFULLY ...");
-    print("   Build by : Abd Alftah Al-Shanti");
+    print("👑 Build by : Abd Alftah Al-Shanti 👑");
   }
 }

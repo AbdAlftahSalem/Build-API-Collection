@@ -19,8 +19,7 @@ class ReadCollectionName {
           "Enter the base url of routes [ We will added it automatically in variable collection ] : ");
       infoModel.baseUrl = (stdin.readLineSync() ?? "")
           .trim()
-          .checkIfEmptyAndNullAndShowMessage(
-              "😢 Collection name cannot be empty !!");
+          .checkIfEmptyAndNullAndShowMessage("😢 Base url cannot be empty !!");
     }
 
     return infoModel;

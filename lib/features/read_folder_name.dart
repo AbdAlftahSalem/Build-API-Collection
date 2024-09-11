@@ -3,7 +3,7 @@ import 'dart:io';
 import '../core/extensions/string_extensions.dart';
 
 class ReadFolderName {
-  static String readFolderName() {
+  static Future<String> readFolderName() async {
     String folderPath = "";
     while (folderPath.isEmpty) {
       stdout.write("Enter your controller folder path : ");
@@ -12,10 +12,9 @@ class ReadFolderName {
           .checkIfEmptyAndNullAndShowMessage(
               "😢 Folder name cannot be empty !!");
 
-      try {
-        Directory directoryFolder = Directory(folderPath);
-      } on PathNotFoundException catch (e) {
-        print("😢 Folder name is not true !!\n");
+      bool acceptPath = await Directory(folderPath).exists();
+      if (!acceptPath) {
+        print("😢 '$folderPath' path not found ...  !!\n");
         folderPath = "";
       }
     }

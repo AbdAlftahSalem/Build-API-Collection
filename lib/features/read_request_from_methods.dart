@@ -11,27 +11,36 @@ class ReadRequestFromMethods {
     List<RequestData> requestData = [];
 
     for (var i in subFiles) {
-      if (i.toString().toLowerCase().startsWith("file")) {
-        String file = i.toString().replaceAll("File: '", "");
-        file = file.replaceAll("'", "");
-        File file2 = File(file);
-        String content = await file2.readAsString();
-        List<String> contentsList = content.split("\n");
-        List<DetailRequestCode> detailsRequests =
-            extractDataFromMethod(contentsList);
-        requestData.add(RequestData(
-          key:
-              "${(file.split("\\")[file.split("\\").length - 1]).split(".")[0]}",
-          detailRequestCode: detailsRequests,
-        ));
+      String file = i.toString().replaceAll("File: '", "");
+      file = file.replaceAll("'", "");
+      File file2 = File(file);
+
+      try {
+        if (i.toString().toLowerCase().startsWith("file")) {
+          String content = await file2.readAsString();
+          List<String> contentsList = content.split("\n");
+          List<DetailRequestCode> detailsRequests =
+              extractDataFromMethod(contentsList);
+          if (detailsRequests.isNotEmpty) {
+            requestData.add(RequestData(
+              key:
+                  "${(file.split("\\")[file.split("\\").length - 1]).split(".")[0]}",
+              detailRequestCode: detailsRequests,
+            ));
+            print(
+                "✅ File : '${file.split("\\")[file.split("\\").length - 1]}' || Finish read ${detailsRequests.length} request successfully 🎉");
+          }
+        } else if (i.toString().toLowerCase().startsWith("directory")) {
+          Directory directory = Directory(i.path);
+          List<FileSystemEntity> subFilesInSubFolder =
+              await directory.listSync();
+          List<RequestData> outputData =
+              await getAllRequestsFromDir(subFilesInSubFolder);
+          requestData.addAll(outputData);
+        }
+      } on FileSystemException catch (e) {
         print(
-            "✅ File : '${file.split("\\")[file.split("\\").length - 1]}' || Finish read ${detailsRequests.length} request successfully 🎉");
-      } else if (i.toString().toLowerCase().startsWith("directory")) {
-        Directory directory = Directory(i.path);
-        List<FileSystemEntity> subFilesInSubFolder = await directory.listSync();
-        List<RequestData> outputData =
-            await getAllRequestsFromDir(subFilesInSubFolder);
-        requestData.addAll(outputData);
+            "❌ '${(file.split("\\")[file.split("\\").length - 1]).split(".")[0]}' || ${e.message}");
       }
     }
     return requestData;
