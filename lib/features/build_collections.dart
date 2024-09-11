@@ -43,7 +43,5 @@ class BuildCollections {
     apiCollectionModel.requestCollectionModel = allRequestsAdapter;
 
     PrintRequestData.printRequestData(allRequestsAdapter);
-    print("\n\n⚡ FINISH BUILD API COLLECTION SUCCESSFULLY ...");
-    print("👑 Build by : Abd Alftah Al-Shanti 👑");
   }
 }
