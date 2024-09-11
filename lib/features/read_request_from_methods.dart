@@ -3,14 +3,16 @@ import 'dart:io';
 
 import '../core/model/detail_request_code.dart';
 import '../core/model/request_data.dart';
+import './read_folder_name.dart';
 
 // E:\Node\e-commerce\src\auth\controller
 class ReadRequestFromMethods {
   static Future<List<RequestData>> getAllRequestsFromDir(
-      List<FileSystemEntity> subFiles) async {
+      String folderPath) async {
+    List<FileSystemEntity> allFilesInDir = ReadFolderName.listFiles(folderPath);
     List<RequestData> requestData = [];
 
-    for (var i in subFiles) {
+    for (var i in allFilesInDir) {
       String file = i.toString().replaceAll("File: '", "");
       file = file.replaceAll("'", "");
       File file2 = File(file);
@@ -31,11 +33,7 @@ class ReadRequestFromMethods {
                 "✅ File : '${file.split("\\")[file.split("\\").length - 1]}' || Finish read ${detailsRequests.length} request successfully 🎉");
           }
         } else if (i.toString().toLowerCase().startsWith("directory")) {
-          Directory directory = Directory(i.path);
-          List<FileSystemEntity> subFilesInSubFolder =
-              await directory.listSync();
-          List<RequestData> outputData =
-              await getAllRequestsFromDir(subFilesInSubFolder);
+          List<RequestData> outputData = await getAllRequestsFromDir(i.path);
           requestData.addAll(outputData);
         }
       } on FileSystemException catch (e) {

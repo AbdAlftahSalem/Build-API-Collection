@@ -4,9 +4,10 @@ import '../core/extensions/string_extensions.dart';
 import '../core/model/variable_model.dart';
 
 class ReadVariablesFromUser {
-  static List<VariableModel> readVariablesFromUser() {
+  static List<VariableModel> readVariablesFromUser(String baseUrl) {
     List<VariableModel> variables = [];
     String choice = "";
+    variables.add(VariableModel(key: "base_url", value: baseUrl));
     while (choice.isEmpty) {
       stdout.write("Do you want to add variables in collection ? [ y / N ] : ");
       choice = (stdin.readLineSync() ?? "")

@@ -1,9 +1,5 @@
-import 'dart:io';
-
 import '../core/model/api_collection_model.dart';
-import '../core/model/request_collection_model.dart';
 import '../core/model/request_data.dart';
-import '../core/model/variable_model.dart';
 import './print_request_data.dart';
 import './read_collection_name.dart';
 import './read_folder_name.dart';
@@ -20,28 +16,21 @@ class BuildCollections {
         await ReadCollectionName.readCollectionName();
 
     // setup variables about collection
-    apiCollectionModel.variables =
-        ReadVariablesFromUser.readVariablesFromUser();
-
-    apiCollectionModel.variables!.add(VariableModel(
-      key: "base_url",
-      value: apiCollectionModel.infoCollection?.baseUrl,
-    ));
+    apiCollectionModel.variables = ReadVariablesFromUser.readVariablesFromUser(
+        apiCollectionModel.infoCollection!.baseUrl);
 
     String folderPath = await ReadFolderName.readFolderName();
 
-    // get all dirs and files from controller folder
-    List<FileSystemEntity> allFilesInDir = ReadFolderName.listFiles(folderPath);
-
     // get all data from controllers files
     List<RequestData> allRequestsData =
-        await ReadRequestFromMethods.getAllRequestsFromDir(allFilesInDir);
+        await ReadRequestFromMethods.getAllRequestsFromDir(folderPath);
 
-    List<FolderRequestCollectionModel> allRequestsAdapter =
+    apiCollectionModel.requestCollectionModel =
         RequestsAdapter.requestsAdapter(allRequestsData);
 
-    apiCollectionModel.requestCollectionModel = allRequestsAdapter;
-
-    PrintRequestData.printRequestData(allRequestsAdapter);
+    // print all requests details
+    PrintRequestData.printRequestData(
+      apiCollectionModel.requestCollectionModel ?? [],
+    );
   }
 }
