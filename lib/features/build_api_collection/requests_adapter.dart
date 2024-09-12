@@ -1,6 +1,6 @@
-import '../core/model/detail_request_code.dart';
-import '../core/model/request_collection_model.dart';
-import '../core/model/request_data.dart';
+import '../../core/model/detail_request_code.dart';
+import '../../core/model/request_collection_model.dart';
+import '../../core/model/request_data.dart';
 
 class RequestsAdapter {
   static List<FolderRequestCollectionModel> requestsAdapter(

@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import '../core/model/detail_request_code.dart';
-import '../core/model/request_data.dart';
-import './read_folder_name.dart';
+import '../../core/model/detail_request_code.dart';
+import '../../core/model/request_data.dart';
+import 'read_folder_name.dart';
 
 // E:\Node\e-commerce\src\auth\controller
 class ReadRequestFromMethods {

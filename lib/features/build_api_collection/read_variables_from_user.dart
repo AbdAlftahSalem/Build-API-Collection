@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import '../core/extensions/string_extensions.dart';
-import '../core/model/variable_model.dart';
+import '../../core/extensions/string_extensions.dart';
+import '../../core/model/variable_model.dart';
 
 class ReadVariablesFromUser {
   static List<VariableModel> readVariablesFromUser(String baseUrl) {

@@ -1,4 +1,4 @@
-import '../core/model/request_collection_model.dart';
+import '../../core/model/request_collection_model.dart';
 
 class PrintRequestData {
   static void printRequestData(List<FolderRequestCollectionModel> allRequests) {

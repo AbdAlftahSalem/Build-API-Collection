@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import '../core/extensions/string_extensions.dart';
+import '../../core/extensions/string_extensions.dart';
 
 class ReadFolderName {
   static Future<String> readFolderName() async {

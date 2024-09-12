@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import '../core/extensions/string_extensions.dart';
-import '../core/model/info_model.dart';
+import '../../core/extensions/string_extensions.dart';
+import '../../core/model/info_model.dart';
 
 class ReadCollectionName {
   static InfoModel readCollectionName() {
