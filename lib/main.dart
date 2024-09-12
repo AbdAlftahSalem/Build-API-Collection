@@ -1,5 +1,5 @@
-import 'features/build_routes_files/build_routes_files.dart';
+import 'features/build_routes_folder_files/build_routes_folder_files.dart';
 
 void main() {
-  BuildRoutesFiles.buildRoutesFiles();
+  BuildRoutesFolderFiles.buildRoutesFiles();
 }
