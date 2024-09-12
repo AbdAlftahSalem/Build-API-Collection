@@ -1,10 +1,3 @@
-/*
-[
-  name : address
-  data : []
-]
-*/
-
 import 'dart:io';
 
 import '../../core/model/methods_name_model.dart';

@@ -8,7 +8,8 @@ import '../../core/utils/read_controllers_path.dart';
 class ReadRequestFromMethods {
   static Future<List<RequestData>> getAllRequestsFromDir(
       String folderPath) async {
-    List<FileSystemEntity> allFilesInDir = ReadControllersPath.listFilesFromPath(folderPath);
+    List<FileSystemEntity> allFilesInDir =
+        ReadControllersPath.listFilesFromPath(folderPath);
     List<RequestData> requestData = [];
 
     for (var i in allFilesInDir) {
@@ -53,6 +54,8 @@ class ReadRequestFromMethods {
         requestData.add(j);
       } else if (j.startsWith("exports.") && requestData.isNotEmpty) {
         detailRequestCode = getDetailsRequest(requestData);
+        detailRequestCode.methodNameInFile =
+            j.replaceAll("exports.", "").split("=").first;
         detailsRequests.add(detailRequestCode);
         detailRequestCode = DetailRequestCode();
         requestData = [];

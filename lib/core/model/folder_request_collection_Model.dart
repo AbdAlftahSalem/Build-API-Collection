@@ -24,12 +24,14 @@ class FolderRequestCollectionModel {
 
 class DetailApiRequest {
   String requestName;
+  String methodNameInFile;
   RequestModel requestModel;
   List<String> response;
 
   DetailApiRequest({
     required this.requestName,
     required this.requestModel,
+    required this.methodNameInFile,
     this.response = const [],
   });
 

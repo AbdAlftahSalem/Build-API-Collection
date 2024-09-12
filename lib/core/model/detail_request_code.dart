@@ -6,6 +6,7 @@ class DetailRequestCode {
   Map<String, dynamic> header;
   String access;
   String requestType;
+  String methodNameInFile;
 
   DetailRequestCode({
     this.desc = "",
@@ -15,5 +16,6 @@ class DetailRequestCode {
     this.header = const {},
     this.access = "",
     this.requestType = "",
+    this.methodNameInFile = "",
   });
 }

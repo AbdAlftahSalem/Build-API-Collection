@@ -17,9 +17,11 @@ class BuildRoutesFolderFiles {
 
     List<FolderRequestCollectionModel> requestsFromControllers =
         RequestsAdapter.requestsAdapter(allRequestsData);
-    BuildRoutesFiles.buildRoutesFiles(requestsFromControllers);
 
     List<MethodsNameModel> methodsName = await
         GetMethodsName.getMethodsName(folderPath);
+
+    BuildRoutesFiles.buildRoutesFiles(requestsFromControllers, methodsName);
+
   }
 }

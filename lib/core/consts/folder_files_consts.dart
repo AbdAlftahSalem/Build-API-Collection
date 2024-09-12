@@ -10,6 +10,6 @@ class FoldersFilesPaths {
 
   String routesFolder = 'lib/src/routes/';
 
-  String folderInFeatures(String name) => 'lib/feature/$name';
+  String fileInRoutes(String name) => '$routesFolder/$name';
 
 }

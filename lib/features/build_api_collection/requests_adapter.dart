@@ -42,7 +42,10 @@ class RequestsAdapter {
           authModel: authModel,
         );
         DetailApiRequest detailApiRequest = DetailApiRequest(
-            requestName: detailRequest.desc, requestModel: requestModel);
+          requestName: detailRequest.desc,
+          requestModel: requestModel,
+          methodNameInFile: detailRequest.methodNameInFile,
+        );
 
         allRequestsDataAdapterLocal.add(detailApiRequest);
       }
