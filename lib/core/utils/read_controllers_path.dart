@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import '../../core/extensions/string_extensions.dart';
+import '../extensions/string_extensions.dart';
 
-class ReadFolderName {
-  static Future<String> readFolderName() async {
+class ReadControllersPath {
+  static Future<String> readControllersPath() async {
     String folderPath = "";
     while (folderPath.isEmpty) {
       stdout.write("Enter your controller folder path : ");
@@ -21,7 +21,7 @@ class ReadFolderName {
     return folderPath;
   }
 
-  static List<FileSystemEntity> listFiles(String folderPath) {
+  static List<FileSystemEntity> listFilesFromPath(String folderPath) {
     Directory directory = Directory(folderPath);
     return directory.listSync();
   }

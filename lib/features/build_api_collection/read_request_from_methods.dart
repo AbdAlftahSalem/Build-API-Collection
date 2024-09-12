@@ -3,13 +3,13 @@ import 'dart:io';
 
 import '../../core/model/detail_request_code.dart';
 import '../../core/model/request_data.dart';
-import 'read_folder_name.dart';
+import '../../core/utils/read_controllers_path.dart';
 
 // E:\Node\e-commerce\src\auth\controller
 class ReadRequestFromMethods {
   static Future<List<RequestData>> getAllRequestsFromDir(
       String folderPath) async {
-    List<FileSystemEntity> allFilesInDir = ReadFolderName.listFiles(folderPath);
+    List<FileSystemEntity> allFilesInDir = ReadControllersPath.listFilesFromPath(folderPath);
     List<RequestData> requestData = [];
 
     for (var i in allFilesInDir) {

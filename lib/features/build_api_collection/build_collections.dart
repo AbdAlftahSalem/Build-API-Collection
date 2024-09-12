@@ -2,8 +2,8 @@ import '../../core/model/api_collection_model.dart';
 import '../../core/model/request_data.dart';
 import 'print_request_data.dart';
 import './read_collection_name.dart';
-import 'read_folder_name.dart';
-import 'read_request_from_methods.dart';
+import '../../core/utils/read_controllers_path.dart';
+import './read_request_from_methods.dart';
 import './read_variables_from_user.dart';
 import 'requests_adapter.dart';
 
@@ -19,7 +19,7 @@ class BuildCollections {
     apiCollectionModel.variables = ReadVariablesFromUser.readVariablesFromUser(
         apiCollectionModel.infoCollection!.baseUrl);
 
-    String folderPath = await ReadFolderName.readFolderName();
+    String folderPath = await ReadControllersPath.readControllersPath();
 
     // get all data from controllers files
     List<RequestData> allRequestsData =
