@@ -8,8 +8,9 @@ class FoldersFilesPaths {
 
   FoldersFilesPaths._internal();
 
-  String routesFolder = 'lib/src/routes/';
+  String routesFolderPath = 'lib/src/routes/';
+  String indexRoutePath = 'lib/src/routes/index.js';
 
-  String fileInRoutes(String name) => '$routesFolder/$name';
+  String fileInRoutes(String name) => '$routesFolderPath/$name';
 
 }

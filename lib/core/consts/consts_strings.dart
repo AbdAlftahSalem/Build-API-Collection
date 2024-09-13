@@ -28,4 +28,32 @@ module.exports = router;
     
 """;
   }
+
+  String getConstRoute(String name) {
+    List<String> nameList = name.split("");
+    nameList.first = nameList.first.toUpperCase();
+    String variableName = nameList.join("");
+
+    return "const ${variableName}Routes = require('./${name}_route');";
+  }
+
+  String getUseRoute(String name) {
+    List<String> nameList = name.split("");
+    nameList.first = nameList.first.toUpperCase();
+    name = nameList.join("");
+
+    return "app.use('/', ${name}Routes);";
+  }
+
+  String indexRouteTemplate(String constImports, String useRoutes) {
+    return """
+$constImports
+
+module.exports = (app) => {
+// update this code with your prefix
+
+$useRoutes
+}    
+""";
+  }
 }
