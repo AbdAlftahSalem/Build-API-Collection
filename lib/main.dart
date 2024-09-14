@@ -1,5 +1,5 @@
-import 'features/build_routes_folder_files/build_routes_folder_files.dart';
+import 'features/build_validators/build_validators.dart';
 
 void main() {
-  BuildRoutesFolderFiles.buildRoutesFiles();
+  BuildValidators.buildValidators();
 }
