@@ -2,14 +2,19 @@ import '../../core/model/folder_request_collection_Model.dart';
 import '../../core/model/variable_model.dart';
 
 class PrintRequestData {
+  /// print all data about collection .
+  /// [allRequests] to print request details .
+  /// [variables] to print variables details .
   static void printRequestData(List<FolderRequestCollectionModel> allRequests,
       List<VariableModel> variables) {
+    // print variables details
     print("\n\n" + "*" * 30 + "⚡⚡ Variables Details ⚡⚡" + "*" * 30 + "\n\n");
     variables.forEach((element) {
       print("Key   : ${element.key}");
       print("Value : ${element.value}\n");
     });
 
+    // print request details
     print("\n\n" + "*" * 30 + "⚡⚡ Requests Details ⚡⚡" + "*" * 30 + "\n\n");
     allRequests.forEach((folderRequest) {
       print("\n⚡ '${folderRequest.folderName}' requests : ");

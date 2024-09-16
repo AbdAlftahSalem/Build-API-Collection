@@ -1,7 +1,7 @@
 import '../../core/model/api_collection_model.dart';
 import '../../core/model/request_data.dart';
 import '../../core/utils/read_controllers_path.dart';
-import './read_collection_name.dart';
+import './read_base_data_collection.dart';
 import './read_request_from_methods.dart';
 import './read_variables_from_user.dart';
 import 'print_request_data.dart';
@@ -13,7 +13,7 @@ class BuildApiCollection {
 
     // setup info about collection
     apiCollectionModel.infoCollection =
-        await ReadCollectionName.readCollectionName();
+        await ReadBaseDataCollection.readBaseDataCollection();
 
     // setup variables about collection
     apiCollectionModel.variables = ReadVariablesFromUser.readVariablesFromUser(

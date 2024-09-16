@@ -3,9 +3,11 @@ import 'dart:io';
 import '../../core/extensions/string_extensions.dart';
 import '../../core/model/info_model.dart';
 
-class ReadCollectionName {
-  static InfoModel readCollectionName() {
-    InfoModel infoModel = InfoModel(collectionName: "", baseUrl: "");
+class ReadBaseDataCollection {
+  /// Read collection name and base url for collection .
+  static InfoModel readBaseDataCollection() {
+    InfoModel infoModel = InfoModel();
+    // read collection name
     while (infoModel.collectionName.isEmpty) {
       stdout.write("Enter name for API collection : ");
       infoModel.collectionName = (stdin.readLineSync() ?? "")
@@ -14,6 +16,7 @@ class ReadCollectionName {
               "😢 Collection name cannot be empty !!");
     }
 
+    // read base url
     while (infoModel.baseUrl.isEmpty) {
       stdout.write(
           "Enter the base url of routes [ We will added it automatically in variable collection ] : ");

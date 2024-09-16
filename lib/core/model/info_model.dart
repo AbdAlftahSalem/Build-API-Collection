@@ -3,8 +3,8 @@ class InfoModel {
   String baseUrl;
 
   InfoModel({
-    required this.collectionName,
-    required this.baseUrl,
+     this.collectionName ="",
+     this.baseUrl ="",
   });
 
   Map<String, dynamic> toMap() {
