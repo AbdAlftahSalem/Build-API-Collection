@@ -2,7 +2,7 @@ class VariableModel {
   String key;
   dynamic value;
 
-  VariableModel({required this.key, required this.value});
+  VariableModel({this.key = "",  this.value = ""});
 
   Map<String, dynamic> toMap() {
     return {

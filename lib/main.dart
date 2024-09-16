@@ -1,5 +1,5 @@
-import 'features/build_validators/build_validators.dart';
+import 'features/build_api_collection/build_collections.dart';
 
 void main() {
-  BuildValidators.buildValidators();
+  BuildApiCollection.buildApiCollection();
 }
