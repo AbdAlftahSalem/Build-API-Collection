@@ -3,37 +3,51 @@ import '../../core/model/folder_request_collection_Model.dart';
 import '../../core/model/request_data.dart';
 
 class RequestsAdapter {
+  /// Adapter request from some of string to api collection
   static List<FolderRequestCollectionModel> requestsAdapter(
       List<RequestData> allRequestsData) {
     List<DetailApiRequest> allRequestsDataAdapter = [];
-    List<DetailApiRequest> allRequestsDataAdapterLocal = [];
     List<FolderRequestCollectionModel> folderRequestCollectionModel = [];
 
     for (RequestData requestData in allRequestsData) {
+      List<DetailApiRequest> allRequestsDataAdapterLocal = [];
+
       for (DetailRequestCode detailRequest in requestData.detailRequestCode) {
         late RequestModel requestModel;
-        List<HeaderModel> headerModel = [];
         late BodyModel bodyModel;
-        AuthModel authModel = AuthModel(authModels: []);
         late UrlModel urlModel;
 
-        String params = "";
+        List<HeaderModel> headerModel = [];
+        AuthModel authModel = AuthModel(authModels: []);
 
-        headerModel = headersAdapter(detailRequest);
-        urlModel = UrlModel(raw: "{{base_url}}${detailRequest.route}$params");
+        String paramsRequest = "";
+
+        // adapt header
+        headerModel = _headersAdapter(detailRequest);
+
+        // adapt url
+        urlModel =
+            UrlModel(raw: "{{base_url}}${detailRequest.route}$paramsRequest");
+
+        // adapt auth
         if (detailRequest.access.contains("privet")) {
           authModel.type = "bearer";
           authModel.authModels = [
             AuthData(key: "token", value: "e", type: "string").toMap()
           ];
         }
+
+        // adapt body
         bodyModel = BodyModel(
           modeData: detailRequest.requestType,
           bodyData: detailRequest.body,
         );
 
-        detailRequest.params.forEach((key, value) => params += "?$key=$value");
+        // adapt params
+        detailRequest.params
+            .forEach((key, value) => paramsRequest += "?$key=$value");
 
+        // setup final request
         requestModel = RequestModel(
           method: detailRequest.requestType,
           header: headerModel,
@@ -41,6 +55,7 @@ class RequestsAdapter {
           urlModel: urlModel,
           authModel: authModel,
         );
+
         DetailApiRequest detailApiRequest = DetailApiRequest(
           requestName: detailRequest.desc,
           requestModel: requestModel,
@@ -55,26 +70,6 @@ class RequestsAdapter {
         detailApiRequest: allRequestsDataAdapter,
       ));
 
-      // print("✅ ${requestData.key}");
-      // for (int i = 0; i < allRequestsDataAdapterLocal.length; ++i) {
-      //   String printMessage =
-      //       "   Request name      : ${allRequestsDataAdapterLocal[i].requestName}\n";
-      //   printMessage +=
-      //       "   Request URL       : ${allRequestsDataAdapterLocal[i].requestModel.urlModel.raw}\n";
-      //   printMessage +=
-      //       "   Request method    : ${allRequestsDataAdapterLocal[i].requestModel.method}\n";
-      //   printMessage +=
-      //       "   Request Body      : ${allRequestsDataAdapterLocal[i].requestModel.bodyModel}\n";
-      //   printMessage +=
-      //       "   Request Headers   : ${allRequestsDataAdapterLocal[i].requestModel.header}\n";
-      //   printMessage +=
-      //       "   Request auth      : ${allRequestsDataAdapterLocal[i].requestModel.authModel?.toMap()}\n ${allRequestsDataAdapterLocal.length - 1 == i ? "\n" : ""}";
-      //
-      //   print(printMessage);
-      //   if (allRequestsDataAdapterLocal.length - 1 == i) {
-      //     print("\n");
-      //   }
-      // }
       allRequestsDataAdapterLocal = [];
       allRequestsDataAdapter = [];
     }
@@ -82,7 +77,7 @@ class RequestsAdapter {
     return folderRequestCollectionModel;
   }
 
-  static List<HeaderModel> headersAdapter(DetailRequestCode detailRequest) {
+  static List<HeaderModel> _headersAdapter(DetailRequestCode detailRequest) {
     List<HeaderModel> headerModel = [];
     detailRequest.header.forEach(
         (key, value) => headerModel.add(HeaderModel(key: key, value: value)));

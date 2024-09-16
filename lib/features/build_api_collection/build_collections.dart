@@ -19,7 +19,7 @@ class BuildApiCollection {
     apiCollectionModel.variables = ReadVariablesFromUser.readVariablesFromUser(
         apiCollectionModel.infoCollection!.baseUrl);
 
-    String folderPath = await ReadControllersPath.readControllersPath();
+    String folderPath = await ControllersPathUtils.readControllersPath();
 
     // get all data from controllers files
     List<RequestData> allRequestsData =

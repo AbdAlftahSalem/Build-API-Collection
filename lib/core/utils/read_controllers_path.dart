@@ -2,7 +2,7 @@ import 'dart:io';
 
 import '../extensions/string_extensions.dart';
 
-class ReadControllersPath {
+class ControllersPathUtils {
   static Future<String> readControllersPath() async {
     String folderPath = "";
     while (folderPath.isEmpty) {

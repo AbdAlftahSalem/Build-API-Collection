@@ -6,56 +6,72 @@ import '../../core/model/request_data.dart';
 import '../../core/utils/read_controllers_path.dart';
 
 class ReadRequestFromMethods {
+  /// Get all files and dirs from [ folderPath ] and read them to extract requests
   static Future<List<RequestData>> getAllRequestsFromDir(
       String folderPath) async {
     List<FileSystemEntity> allFilesInDir =
-        ReadControllersPath.listFilesFromPath(folderPath);
+        ControllersPathUtils.listFilesFromPath(folderPath);
     List<RequestData> requestData = [];
 
-    for (var i in allFilesInDir) {
-      String file = i.toString().replaceAll("File: '", "");
-      file = file.replaceAll("'", "");
-      File file2 = File(file);
+    for (FileSystemEntity fileSystemEntity in allFilesInDir) {
+      String fileString = fileSystemEntity.toString().replaceAll("File: '", "");
+      fileString = fileString.replaceAll("'", "");
+
+      String fileName = fileString
+          .split("\\")[fileString.split("\\").length - 1]
+          .split(".")[0];
+
+      File file = File(fileString);
 
       try {
-        if (i.toString().toLowerCase().startsWith("file")) {
-          String content = await file2.readAsString();
+        // if fileSystemEntity is file [ not dir ]
+        if (fileSystemEntity.toString().toLowerCase().startsWith("file")) {
+          String content = await file.readAsString();
           List<String> contentsList = content.split("\n");
+
+          // get details request
           List<DetailRequestCode> detailsRequests =
               extractDataFromMethod(contentsList);
+
+          // if file contain summary before method
           if (detailsRequests.isNotEmpty) {
             requestData.add(RequestData(
               key:
-                  "${(file.split("\\")[file.split("\\").length - 1]).split(".")[0]}",
+                  "${(fileString.split("\\")[fileString.split("\\").length - 1]).split(".")[0]}",
               detailRequestCode: detailsRequests,
             ));
             print(
-                "✅ File : '${file.split("\\")[file.split("\\").length - 1]}' || Finish read ${detailsRequests.length} request successfully 🎉");
+                "✅ File : '${fileName}' || Finish read ${detailsRequests.length} request successfully 🎉");
           }
-        } else if (i.toString().toLowerCase().startsWith("directory")) {
-          List<RequestData> outputData = await getAllRequestsFromDir(i.path);
+          // if fileSystemEntity is dir [ not file ]
+        } else if (fileSystemEntity
+            .toString()
+            .toLowerCase()
+            .startsWith("directory")) {
+          List<RequestData> outputData =
+              await getAllRequestsFromDir(fileSystemEntity.path);
           requestData.addAll(outputData);
         }
       } on FileSystemException catch (e) {
-        print(
-            "❌ '${(file.split("\\")[file.split("\\").length - 1]).split(".")[0]}' || ${e.message}");
+        print("❌ '$fileName' || ${e.message}");
       }
     }
     return requestData;
   }
 
+  /// get all lines start with // @ from [contents]
   static List<DetailRequestCode> extractDataFromMethod(
-      List<String> contentsList) {
+      List<String> contents) {
     DetailRequestCode detailRequestCode = DetailRequestCode();
     List<DetailRequestCode> detailsRequests = [];
     List<String> requestData = [];
-    for (String j in contentsList) {
-      if (j.startsWith("// @")) {
-        requestData.add(j);
-      } else if (j.startsWith("exports.") && requestData.isNotEmpty) {
+    for (String line in contents) {
+      if (line.startsWith("// @")) {
+        requestData.add(line);
+      } else if (line.startsWith("exports.") && requestData.isNotEmpty) {
         detailRequestCode = getDetailsRequest(requestData);
         detailRequestCode.methodNameInFile =
-            j.replaceAll("exports.", "").split("=").first;
+            line.replaceAll("exports.", "").split("=").first;
         detailsRequests.add(detailRequestCode);
         detailRequestCode = DetailRequestCode();
         requestData = [];
