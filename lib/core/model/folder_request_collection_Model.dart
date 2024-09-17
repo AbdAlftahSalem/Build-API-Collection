@@ -2,36 +2,34 @@ import 'dart:convert';
 
 class FolderRequestCollectionModel {
   String folderName;
-  List<DetailApiRequest> detailApiRequest;
+  List<DetailRequest> detailRequests;
 
   FolderRequestCollectionModel({
     required this.folderName,
-    required this.detailApiRequest,
+    required this.detailRequests,
   });
 
   Map<String, dynamic> toMap() {
     return {
       'name': this.folderName,
-      'item': this.detailApiRequest,
+      'item': this.detailRequests,
     };
   }
 
   @override
   String toString() {
-    return 'Folder Request Collection {folderName: $folderName, detailApiRequest: $detailApiRequest}';
+    return 'Folder Request Collection {folderName: $folderName, detailApiRequest: $detailRequests}';
   }
 }
 
-class DetailApiRequest {
+class DetailRequest {
   String requestName;
-  String methodNameInFile;
   RequestModel requestModel;
   List<String> response;
 
-  DetailApiRequest({
+  DetailRequest({
     required this.requestName,
     required this.requestModel,
-    required this.methodNameInFile,
     this.response = const [],
   });
 
@@ -52,40 +50,40 @@ class DetailApiRequest {
 class RequestModel {
   String method;
   List<HeaderModel> header;
-  BodyModel bodyModel;
-  UrlModel urlModel;
-  AuthModel? authModel;
+  BodyModel body;
+  UrlModel url;
+  AuthModel? auth;
 
   RequestModel({
     required this.method,
     required this.header,
-    required this.bodyModel,
-    required this.urlModel,
-    this.authModel,
+    required this.body,
+    required this.url,
+    this.auth,
   });
 
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> data = {"method": method, "url": urlModel.toMap()};
+    Map<String, dynamic> data = {"method": method, "url": url.toMap()};
 
     if (header.isNotEmpty) data.addAll({'header': header});
 
-    if (bodyModel.bodyData.isNotEmpty) data.addAll({'body': bodyModel.toMap()});
+    if (body.body.isNotEmpty) data.addAll({'body': body.toMap()});
 
-    if (authModel != null) data.addAll({"auth": authModel!.toMap()});
+    if (auth != null) data.addAll({"auth": auth!.toMap()});
 
     return data;
   }
 
   @override
   String toString() {
-    return 'Request {method: $method, header: $header, bodyModel: $bodyModel, urlModel: $urlModel, authModel: $authModel}';
+    return 'Request {method : $method, header : $header, body : $body, url : $url, auth : $auth}';
   }
 }
 
 class HeaderModel {
   String key;
   String value;
-  String type = "text";
+  String type;
 
   HeaderModel({
     required this.key,
@@ -108,25 +106,26 @@ class HeaderModel {
 }
 
 class BodyModel {
-  String modeData;
-  String bodyData;
+  String mode;
+  String body;
   Map<String, dynamic> raw;
   Map<String, dynamic> options;
   List<FormDataModel>? formData;
 
-  BodyModel(
-      {required this.modeData,
-      this.bodyData = '',
-      this.formData,
-      this.raw = const {},
-      this.options = const {}}) {
-    if (modeData.toLowerCase() != "formdata") {
-      raw = jsonDecode(bodyData.isEmpty ? "{}" : bodyData);
+  BodyModel({
+    required this.mode,
+    this.body = '',
+    this.formData,
+    this.raw = const {},
+    this.options = const {},
+  }) {
+    if (mode.toLowerCase() != "formdata") {
+      raw = jsonDecode(body.isEmpty ? "{}" : body);
       options = {
         "raw": {"language": "json"}
       };
     } else {
-      Map<String, dynamic> formDataMap = jsonDecode(bodyData);
+      Map<String, dynamic> formDataMap = jsonDecode(body);
       formData = [];
       if (!formDataMap.containsKey("option")) {
         formDataMap.addAll({
@@ -153,10 +152,10 @@ class BodyModel {
   }
 
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> objMap = {'mode': modeData};
+    Map<String, dynamic> objMap = {'mode': mode};
 
-    if (modeData.toLowerCase() != "formdata") {
-      objMap.addAll({"raw": raw, "options": options});
+    if (mode.toLowerCase() != "formdata") {
+      objMap.addAll({"raw": raw});
     } else
       objMap.addAll({"formdata": formData});
 
@@ -165,7 +164,7 @@ class BodyModel {
 
   @override
   String toString() {
-    return 'Body {modeData: $modeData, bodyData: $bodyData, raw: $raw, options: $options, formData: $formData}';
+    return 'Body {modeData: $mode, bodyData: $body, raw: $raw, options: $options, formData: $formData}';
   }
 }
 

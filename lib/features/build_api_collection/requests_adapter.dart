@@ -6,11 +6,11 @@ class RequestsAdapter {
   /// Adapter request from some of string to api collection
   static List<FolderRequestCollectionModel> requestsAdapter(
       List<RequestData> allRequestsData) {
-    List<DetailApiRequest> allRequestsDataAdapter = [];
+    List<DetailRequest> allRequestsDataAdapter = [];
     List<FolderRequestCollectionModel> folderRequestCollectionModel = [];
 
     for (RequestData requestData in allRequestsData) {
-      List<DetailApiRequest> allRequestsDataAdapterLocal = [];
+      List<DetailRequest> allRequestsDataAdapterLocal = [];
 
       for (DetailRequestCode detailRequest in requestData.detailRequestCode) {
         late RequestModel requestModel;
@@ -39,8 +39,8 @@ class RequestsAdapter {
 
         // adapt body
         bodyModel = BodyModel(
-          modeData: detailRequest.requestType,
-          bodyData: detailRequest.body,
+          mode: detailRequest.requestType,
+          body: detailRequest.body,
         );
 
         // adapt params
@@ -51,15 +51,14 @@ class RequestsAdapter {
         requestModel = RequestModel(
           method: detailRequest.requestType,
           header: headerModel,
-          bodyModel: bodyModel,
-          urlModel: urlModel,
-          authModel: authModel,
+          body: bodyModel,
+          url: urlModel,
+          auth: authModel,
         );
 
-        DetailApiRequest detailApiRequest = DetailApiRequest(
+        DetailRequest detailApiRequest = DetailRequest(
           requestName: detailRequest.desc,
           requestModel: requestModel,
-          methodNameInFile: detailRequest.methodNameInFile,
         );
 
         allRequestsDataAdapterLocal.add(detailApiRequest);
@@ -67,7 +66,7 @@ class RequestsAdapter {
       allRequestsDataAdapter.addAll(allRequestsDataAdapterLocal);
       folderRequestCollectionModel.add(FolderRequestCollectionModel(
         folderName: requestData.key,
-        detailApiRequest: allRequestsDataAdapter,
+        detailRequests: allRequestsDataAdapter,
       ));
 
       allRequestsDataAdapterLocal = [];
