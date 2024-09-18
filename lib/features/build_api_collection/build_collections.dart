@@ -1,4 +1,5 @@
 import '../../core/model/api_collection_model.dart';
+import '../../core/model/info_model.dart';
 import '../../core/model/request_data.dart';
 import '../../core/utils/read_controllers_path.dart';
 import './read_base_data_collection.dart';
@@ -9,15 +10,15 @@ import 'requests_adapter.dart';
 
 class BuildApiCollection {
   static void buildApiCollection() async {
-    ApiCollectionModel apiCollectionModel = ApiCollectionModel();
+    late ApiCollectionModel apiCollectionModel;
 
     // setup info about collection
-    apiCollectionModel.infoCollection =
-        await ReadBaseDataCollection.readBaseDataCollection();
+    InfoModel infoModel = await ReadBaseDataCollection.readBaseDataCollection();
+    apiCollectionModel = ApiCollectionModel(infoCollection: infoModel);
 
     // setup variables about collection
     apiCollectionModel.variables = ReadVariablesFromUser.readVariablesFromUser(
-        apiCollectionModel.infoCollection!.baseUrl);
+        apiCollectionModel.infoCollection.baseUrl);
 
     String folderPath = await ControllersPathUtils.readControllersPath();
 
@@ -28,10 +29,12 @@ class BuildApiCollection {
     apiCollectionModel.requestCollectionModel =
         RequestsAdapter.requestsAdapter(allRequestsData);
 
+    PrintAndSaveRequestData.saveJSONFile(apiCollectionModel);
+
     // print all requests details
-    PrintRequestData.printRequestData(
-      apiCollectionModel.requestCollectionModel ?? [],
-      apiCollectionModel.variables ?? [],
+    PrintAndSaveRequestData.printRequestData(
+      apiCollectionModel.requestCollectionModel,
+      apiCollectionModel.variables,
     );
   }
 }

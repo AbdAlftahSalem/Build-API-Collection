@@ -12,7 +12,7 @@ class FolderRequestCollectionModel {
   Map<String, dynamic> toMap() {
     return {
       'name': this.folderName,
-      'item': this.detailRequests,
+      'item': this.detailRequests.map((e) => e.toMap()).toList(),
     };
   }
 
@@ -65,7 +65,8 @@ class RequestModel {
   Map<String, dynamic> toMap() {
     Map<String, dynamic> data = {"method": method, "url": url.toMap()};
 
-    if (header.isNotEmpty) data.addAll({'header': header});
+    if (header.isNotEmpty)
+      data.addAll({'header': header.map((e) => e.toMap()).toList()});
 
     if (body.body.isNotEmpty) data.addAll({'body': body.toMap()});
 
@@ -157,7 +158,7 @@ class BodyModel {
     if (mode.toLowerCase() != "formdata") {
       objMap.addAll({"raw": raw});
     } else
-      objMap.addAll({"formdata": formData});
+      objMap.addAll({"formdata": (formData ?? []).map((e) => e.toMap()).toList()});
 
     return objMap;
   }

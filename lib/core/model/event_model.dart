@@ -3,6 +3,13 @@ class EventModel {
   ScriptModel script;
 
   EventModel({required this.listen, required this.script});
+
+  Map<String, dynamic> toMap() {
+    return {
+      'listen': this.listen,
+      'script': this.script,
+    };
+  }
 }
 
 class ScriptModel {

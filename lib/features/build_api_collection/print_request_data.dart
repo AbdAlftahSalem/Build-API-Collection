@@ -1,7 +1,11 @@
+import 'dart:convert';
+import 'dart:io';
+
+import '../../core/model/api_collection_model.dart';
 import '../../core/model/folder_request_collection_Model.dart';
 import '../../core/model/variable_model.dart';
 
-class PrintRequestData {
+class PrintAndSaveRequestData {
   /// print all data about collection .
   /// [allRequests] to print request details .
   /// [variables] to print variables details .
@@ -27,5 +31,12 @@ class PrintRequestData {
     });
     print("\n\n⚡ FINISH BUILD API COLLECTION SUCCESSFULLY ...");
     print("👑 Build by : Abd Alftah Al-Shanti 👑");
+  }
+
+  static void saveJSONFile(ApiCollectionModel apiCollectionModel) {
+    File file =
+        File("${apiCollectionModel.infoCollection.collectionName}.json");
+
+    file.writeAsStringSync(jsonEncode(apiCollectionModel.toMap()));
   }
 }
