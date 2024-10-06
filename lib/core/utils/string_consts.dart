@@ -1,5 +1,8 @@
-class StringConsts {
+import 'dart:convert';
 
+import 'package:build_post_man_collection/core/model/api_collection_model.dart';
+
+class StringConsts {
   static final String htmlContent = """
 <!DOCTYPE html>
 <html lang="en">
@@ -68,7 +71,7 @@ class StringConsts {
 </html>  
 """;
 
-  static final String styleContent =  """
+  static final String styleContent = """
 * {
   margin: 0;
 }
@@ -337,16 +340,12 @@ const setupRequestsData = async function () {
             currentRequest.request.body.mode.toLocaleLowerCase() === "formdata"
           ) {
             let bodyData = {};
-            console.log(
-              `${currentRequest.name} ${currentRequest.request.body}`
-            );
             for (
               var bodyIndex = 0;
               bodyIndex < currentRequest.request.body.formdata.length;
               bodyIndex++
             ) {
               let bodyItem = currentRequest.request.body.formdata[bodyIndex];
-              console.log(bodyItem);
               bodyData[bodyItem.key] =
                 bodyItem.type === "text" ? bodyItem.value : bodyItem.src;
             }
@@ -407,4 +406,9 @@ getRequestsFromJSON();
   
 """;
 
+  static String dataContent(ApiCollectionModel apiCollectionModel) {
+    return """
+const requestsData = ${jsonEncode(apiCollectionModel.toMap())}
+""";
+  }
 }

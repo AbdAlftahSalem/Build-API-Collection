@@ -18,10 +18,10 @@ class ApiCollectionModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'info': this.infoCollection.toMap(),
-      'item': this.requestCollectionModel.map((e) => e.toMap()).toList(),
-      'events': this.events.map((e) => e.toMap()).toList(),
-      'variables': this.variables.map((e) => e.toMap()).toList(),
+      'info': infoCollection.toMap(),
+      'item': requestCollectionModel.map((e) => e.toMap()).toList(),
+      'events': events.map((e) => e.toMap()).toList(),
+      'variables': variables.map((e) => e.toMap()).toList(),
     };
   }
 }
