@@ -6,8 +6,8 @@ class EventModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'listen': this.listen,
-      'script': this.script,
+      'listen': listen,
+      'script': script,
     };
   }
 }
@@ -20,8 +20,8 @@ class ScriptModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'type': this.type,
-      'exec': this.exec,
+      'type': type,
+      'exec': exec,
     };
   }
 }

@@ -6,8 +6,8 @@ class VariableModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'key': this.key,
-      'value': this.value,
+      'key': key,
+      'value': value,
     };
   }
 

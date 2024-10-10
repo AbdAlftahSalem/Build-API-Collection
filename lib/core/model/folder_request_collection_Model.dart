@@ -11,8 +11,8 @@ class FolderRequestCollectionModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'name': this.folderName,
-      'item': this.detailRequests.map((e) => e.toMap()).toList(),
+      'name': folderName,
+      'item': detailRequests.map((e) => e.toMap()).toList(),
     };
   }
 
@@ -35,9 +35,9 @@ class DetailRequest {
 
   Map<String, dynamic> toMap() {
     return {
-      'name': this.requestName,
-      'request': this.requestModel.toMap(),
-      'response': this.response,
+      'name': requestName,
+      'request': requestModel.toMap(),
+      'response': response,
     };
   }
 
@@ -65,8 +65,9 @@ class RequestModel {
   Map<String, dynamic> toMap() {
     Map<String, dynamic> data = {"method": method, "url": url.toMap()};
 
-    if (header.isNotEmpty)
+    if (header.isNotEmpty) {
       data.addAll({'header': header.map((e) => e.toMap()).toList()});
+    }
 
     if (body.body.isNotEmpty) data.addAll({'body': body.toMap()});
 
@@ -94,9 +95,9 @@ class HeaderModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'key': this.key,
-      'value': this.value,
-      'type': this.type,
+      'key': key,
+      'value': value,
+      'type': type,
     };
   }
 
@@ -157,8 +158,9 @@ class BodyModel {
 
     if (mode.toLowerCase() != "formdata") {
       objMap.addAll({"raw": raw});
-    } else
+    } else {
       objMap.addAll({"formdata": (formData ?? []).map((e) => e.toMap()).toList()});
+    }
 
     return objMap;
   }
@@ -205,8 +207,8 @@ class AuthModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'type': this.type,
-      'auth': this.authModels,
+      'type': type,
+      'auth': authModels,
     };
   }
 
@@ -227,9 +229,9 @@ class AuthData {
 
   Map<String, dynamic> toMap() {
     return {
-      'key': this.key,
-      'value': this.value,
-      'type': this.type,
+      'key': key,
+      'value': value,
+      'type': type,
     };
   }
 
@@ -254,14 +256,14 @@ class UrlModel {
   }
 
   setupPathValue() {
-    path = this.raw.split("/");
+    path = raw.split("/");
     path.removeWhere((element) => element.isEmpty);
     path.removeAt(0);
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'raw': this.raw,
+      'raw': raw,
       'host': ["{{base_url}}"],
       'path': path,
     };
