@@ -1,5 +1,5 @@
 import '../../core/model/detail_request_code.dart';
-import '../../core/model/folder_request_collection_Model.dart';
+import '../../core/model/folder_request_collection_model.dart';
 import '../../core/model/request_data.dart';
 
 class RequestsAdapter {

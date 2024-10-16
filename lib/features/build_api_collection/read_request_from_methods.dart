@@ -40,8 +40,8 @@ class ReadRequestFromMethods {
                   (fileString.split("\\")[fileString.split("\\").length - 1]).split(".")[0],
               detailRequestCode: detailsRequests,
             ));
-            print(
-                "✅ File : '$fileName' || Finish read ${detailsRequests.length} request successfully 🎉");
+            // print(
+            //     "✅ File : '$fileName' || Finish read ${detailsRequests.length} request successfully 🎉");
           }
           // if fileSystemEntity is dir [ not file ]
         } else if (fileSystemEntity

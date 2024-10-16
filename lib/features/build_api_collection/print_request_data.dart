@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:build_post_man_collection/core/services/folder_and_file_service/folder_and_file_service.dart';
 
 import '../../core/model/api_collection_model.dart';
-import '../../core/model/folder_request_collection_Model.dart';
+import '../../core/model/folder_request_collection_model.dart';
 import '../../core/model/variable_model.dart';
 
 class PrintAndSaveRequestData {
