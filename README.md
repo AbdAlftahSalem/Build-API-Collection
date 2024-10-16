@@ -28,17 +28,7 @@ and Thunder will use this details to build API collection ( JSON / Web page )
 // @body      // @body {"product_name" : "Iphone 15", "product_image_cover" : "images/iphone15", "option" : {"files_key" : ["product_image_cover"]}}
 // @access   Privet (user)
 exports.addUserAddressHandler = asyncHandler(async (req, res, next) => {
-  const user = await User.findOneAndUpdate(
-    { _id: req.user._id },
-    {
-      $addToSet: { addresses: req.body },
-    },
-    { new: true }
-  );
-  if (!user) return next(new ApiError("Error while adding your address, please try again", StatusCodes.NOT_MODIFIED));
-  return res
-    .status(StatusCodes.OK)
-    .json({ status: "success", message: "Your address has been added successfully", data: user.addresses });
+  // write you code here
 });
 ```
 
