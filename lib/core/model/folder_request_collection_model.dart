@@ -123,10 +123,12 @@ class BodyModel {
   }) {
     if (mode.toLowerCase() != "formdata") {
       raw = jsonDecode(body.isEmpty ? "{}" : body);
+      mode = "raw";
       options = {
         "raw": {"language": "json"}
       };
     } else {
+      mode = "formdata";
       Map<String, dynamic> formDataMap = jsonDecode(body);
       formData = [];
       if (!formDataMap.containsKey("option")) {
@@ -154,13 +156,20 @@ class BodyModel {
   }
 
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> objMap = {'mode': mode};
+    Map<String, dynamic> objMap = {
+      'mode': mode,
+      'raw': raw,
+      'options': options
+    };
 
     if (mode.toLowerCase() != "formdata") {
       objMap.addAll({"raw": body});
     } else {
-      objMap.addAll({"formdata": (formData ?? []).map((e) => e.toMap()).toList()});
+      objMap.addAll(
+          {"formdata": (formData ?? []).map((e) => e.toMap()).toList()});
     }
+
+    print(objMap);
 
     return objMap;
   }

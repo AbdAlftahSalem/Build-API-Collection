@@ -2,7 +2,7 @@
 
 This package enables you to build full API collection directly from code without added it manually .
 
-## 🚀 Getting started ( BETA )
+## 🚀 Getting started
 
 ## Usage
 

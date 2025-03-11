@@ -33,12 +33,12 @@ class BuildApiCollection {
 
     PrintAndSaveRequestData.saveJSONFile(apiCollectionModel, controllerPath);
 
+    await BuildWebVersion.buildWebVersion(apiCollectionModel, controllerPath);
+
     // print all requests details
     PrintAndSaveRequestData.printRequestData(
       apiCollectionModel.requestCollectionModel,
       apiCollectionModel.variables,
     );
-
-    await BuildWebVersion.buildWebVersion(apiCollectionModel, controllerPath);
   }
 }
