@@ -1,5 +1,5 @@
 name: thunder_api
-description: A starting point for Dart libraries or applications.
+description: "A Dart package to build API collections directly from code with detailed annotations."
 version: 1.0.0
 repository: https://github.com/AbdAlftahSalem/Build-API-Collection.git
 
