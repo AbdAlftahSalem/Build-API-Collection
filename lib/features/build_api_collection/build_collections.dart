@@ -1,4 +1,4 @@
-import 'package:build_post_man_collection/features/build_web_version/build_web_version.dart';
+import 'package:thunder_api/features/build_web_version/build_web_version.dart';
 
 import '../../core/model/api_collection_model.dart';
 import '../../core/model/info_model.dart';

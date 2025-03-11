@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:build_post_man_collection/core/model/api_collection_model.dart';
+import 'package:thunder_api/core/model/api_collection_model.dart';
 
 class StringConsts {
   static final String htmlContent = """

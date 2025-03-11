@@ -1,10 +1,10 @@
-name: build_post_man_collection
+name: thunder_api
 description: A starting point for Dart libraries or applications.
 version: 1.0.0
 repository: https://github.com/AbdAlftahSalem/Build-API-Collection.git
 
 environment:
-  sdk: ^3.2.0-134.0.dev
+  sdk: ">=3.2.0-134.0.dev <4.0.0"
 
 # Add regular dependencies here.
 dependencies:
