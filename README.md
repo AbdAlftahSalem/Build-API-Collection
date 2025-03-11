@@ -25,7 +25,7 @@ and Thunder will use this details to build API collection ( JSON / Web page )
 // @route    formdata /api/v1/addresses
 // @param    {"sort" : "desc"}
 // @header   {"api_key" : "1kwQTz8Kkc2KWrrUvBvBSkiEZ7RCEQ"}
-// @body      // @body {"product_name" : "Iphone 15", "product_image_cover" : "images/iphone15", "option" : {"files_key" : ["product_image_cover"]}}
+// @body     {"product_name" : "Iphone 15", "product_image_cover" : "images/iphone15", "option" : {"files_key" : ["product_image_cover"]}}
 // @access   Privet (user)
 exports.addUserAddressHandler = asyncHandler(async (req, res, next) => {
   // write you code here

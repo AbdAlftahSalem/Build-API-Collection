@@ -157,7 +157,7 @@ class BodyModel {
     Map<String, dynamic> objMap = {'mode': mode};
 
     if (mode.toLowerCase() != "formdata") {
-      objMap.addAll({"raw": raw});
+      objMap.addAll({"raw": body});
     } else {
       objMap.addAll({"formdata": (formData ?? []).map((e) => e.toMap()).toList()});
     }
