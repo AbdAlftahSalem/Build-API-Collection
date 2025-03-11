@@ -22,16 +22,16 @@ class BuildApiCollection {
     apiCollectionModel.variables = ReadVariablesFromUser.readVariablesFromUser(
         apiCollectionModel.infoCollection.baseUrl);
 
-    String folderPath = await ControllersPathUtils.readControllersPath();
+    String controllerPath = await ControllersPathUtils.readControllersPath();
 
     // get all data from controllers files
     List<RequestData> allRequestsData =
-        await ReadRequestFromMethods.getAllRequestsFromDir(folderPath);
+        await ReadRequestFromMethods.getAllRequestsFromDir(controllerPath);
 
     apiCollectionModel.requestCollectionModel =
         RequestsAdapter.requestsAdapter(allRequestsData);
 
-    PrintAndSaveRequestData.saveJSONFile(apiCollectionModel);
+    PrintAndSaveRequestData.saveJSONFile(apiCollectionModel, controllerPath);
 
     // print all requests details
     PrintAndSaveRequestData.printRequestData(
@@ -39,6 +39,6 @@ class BuildApiCollection {
       apiCollectionModel.variables,
     );
 
-    await BuildWebVersion.buildWebVersion(apiCollectionModel);
+    await BuildWebVersion.buildWebVersion(apiCollectionModel, controllerPath);
   }
 }

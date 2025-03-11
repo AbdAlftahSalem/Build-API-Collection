@@ -35,10 +35,10 @@ class PrintAndSaveRequestData {
     print("👑 Build by : Abd Alftah Al-Shanti 👑");
   }
 
-  static void saveJSONFile(ApiCollectionModel apiCollectionModel) async{
-    await FolderAndFileService.createFolder("${Directory.current.path}\\dist");
+  static void saveJSONFile(ApiCollectionModel apiCollectionModel, String outputPath) async{
+    await FolderAndFileService.createFolder('$outputPath\\thunder-output\\');
     File file =
-        File("${Directory.current.path}\\dist\\${apiCollectionModel.infoCollection.collectionName}.json");
+        File("$outputPath\\thunder-output\\${apiCollectionModel.infoCollection.collectionName}.json");
 
     file.writeAsStringSync(jsonEncode(apiCollectionModel.toMap()));
   }

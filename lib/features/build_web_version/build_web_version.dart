@@ -1,12 +1,11 @@
-import 'dart:io';
-
 import '../../core/model/api_collection_model.dart';
 import '../../core/services/folder_and_file_service/folder_and_file_service.dart';
 import '../../core/utils/string_consts.dart';
 
 class BuildWebVersion {
-  static buildWebVersion(ApiCollectionModel apiCollectionModel) async {
-    String webPath = '${Directory.current.path}\\dist\\web';
+  static buildWebVersion(
+      ApiCollectionModel apiCollectionModel, String outputPath) async {
+    String webPath = '$outputPath\\dist\\web';
     await FolderAndFileService.createFolder(webPath);
     await FolderAndFileService.createFolder("$webPath\\style");
     await FolderAndFileService.createFolder("$webPath\\js");
