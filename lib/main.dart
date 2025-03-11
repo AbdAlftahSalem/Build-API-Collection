@@ -1,5 +1,5 @@
-import 'features/build_api_collection/build_collections.dart';
+import 'core/services/command_service/command_service.dart';
 
-void main() {
-  BuildApiCollection.buildApiCollection();
+void main(List<String> arguments) {
+  CommandServices.startCommands(arguments);
 }

@@ -9,6 +9,9 @@ This package enables you to build full API collection directly from code without
 Before every method in controllers write some details about method to make it more readable
 and Thunder will use this details to build API collection ( JSON / Web page )
 
+```
+  thunder_api --build-api-doc
+```
 
 - Use ( // @desc Some of description ) to add request name in collection
 - Use ( // @route GET /api/v1/addresses ) to add route in collection

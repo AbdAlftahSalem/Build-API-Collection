@@ -5,7 +5,7 @@ import '../../core/utils/string_consts.dart';
 class BuildWebVersion {
   static buildWebVersion(
       ApiCollectionModel apiCollectionModel, String outputPath) async {
-    String webPath = '$outputPath\\dist\\web';
+    String webPath = '$outputPath\\thunder-output\\web';
     await FolderAndFileService.createFolder(webPath);
     await FolderAndFileService.createFolder("$webPath\\style");
     await FolderAndFileService.createFolder("$webPath\\js");
