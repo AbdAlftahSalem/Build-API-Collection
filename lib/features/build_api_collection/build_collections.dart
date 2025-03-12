@@ -1,14 +1,15 @@
-import 'package:thunder_api/features/build_web_version/build_web_version.dart';
+import 'dart:io';
 
 import '../../core/model/api_collection_model.dart';
 import '../../core/model/info_model.dart';
 import '../../core/model/request_data.dart';
 import '../../core/utils/read_controllers_path.dart';
+import '../../core/utils/read_request_from_methods.dart';
+import '../../core/utils/read_variables_from_user.dart';
+import '../../core/utils/requests_adapter.dart';
+import '../build_web_version/build_web_version.dart';
 import './read_base_data_collection.dart';
-import './read_request_from_methods.dart';
-import './read_variables_from_user.dart';
 import 'print_request_data.dart';
-import 'requests_adapter.dart';
 
 class BuildApiCollection {
   static void buildApiCollection() async {
@@ -22,18 +23,20 @@ class BuildApiCollection {
     apiCollectionModel.variables = ReadVariablesFromUser.readVariablesFromUser(
         apiCollectionModel.infoCollection.baseUrl);
 
-    String controllerPath = await ControllersPathUtils.readControllersPath();
+    Directory controllerPath = await ControllersPathUtils.readControllersPath();
 
     // get all data from controllers files
     List<RequestData> allRequestsData =
-        await ReadRequestFromMethods.getAllRequestsFromDir(controllerPath);
+        await ReadRequestFromMethods.getAllRequestsFromDir(controllerPath.path);
 
     apiCollectionModel.requestCollectionModel =
         RequestsAdapter.requestsAdapter(allRequestsData);
 
-    PrintAndSaveRequestData.saveJSONFile(apiCollectionModel, controllerPath);
+    PrintAndSaveRequestData.saveJSONFile(
+        apiCollectionModel, controllerPath.path);
 
-    await BuildWebVersion.buildWebVersion(apiCollectionModel, controllerPath);
+    await BuildWebVersion.buildWebVersion(
+        apiCollectionModel, controllerPath.path);
 
     // print all requests details
     PrintAndSaveRequestData.printRequestData(

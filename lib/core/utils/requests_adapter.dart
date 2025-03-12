@@ -1,6 +1,6 @@
-import '../../core/model/detail_request_code.dart';
-import '../../core/model/folder_request_collection_model.dart';
-import '../../core/model/request_data.dart';
+import '../model/detail_request_code.dart';
+import '../model/folder_request_collection_model.dart';
+import '../model/request_data.dart';
 
 class RequestsAdapter {
   /// Adapter request from some of string to api collection

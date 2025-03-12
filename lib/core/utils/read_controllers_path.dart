@@ -3,7 +3,7 @@ import 'dart:io';
 import '../extensions/string_extensions.dart';
 
 class ControllersPathUtils {
-  static Future<String> readControllersPath() async {
+  static Future<Directory> readControllersPath() async {
     String folderPath = "";
     while (folderPath.isEmpty) {
       stdout.write("Enter your controller folder path : ");
@@ -18,7 +18,7 @@ class ControllersPathUtils {
         folderPath = "";
       }
     }
-    return folderPath;
+    return Directory(folderPath);
   }
 
   static List<FileSystemEntity> listFilesFromPath(String folderPath) {

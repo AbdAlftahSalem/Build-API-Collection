@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import '../../core/model/detail_request_code.dart';
-import '../../core/model/request_data.dart';
-import '../../core/utils/read_controllers_path.dart';
+import '../model/detail_request_code.dart';
+import '../model/request_data.dart';
+import 'read_controllers_path.dart';
 
 class ReadRequestFromMethods {
   /// Get all files and dirs from [ folderPath ] and read them to extract requests
