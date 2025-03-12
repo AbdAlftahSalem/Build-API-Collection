@@ -59,6 +59,7 @@ class RequestsAdapter {
         DetailRequest detailApiRequest = DetailRequest(
           requestName: detailRequest.desc,
           requestModel: requestModel,
+          methodName: detailRequest.methodNameInFile,
         );
 
         allRequestsDataAdapterLocal.add(detailApiRequest);

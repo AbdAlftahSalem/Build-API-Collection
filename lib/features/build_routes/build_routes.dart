@@ -25,8 +25,6 @@ class BuildRoutes {
     apiCollectionModel.requestCollectionModel =
         RequestsAdapter.requestsAdapter(allRequestsData);
 
-    print(apiCollectionModel.requestCollectionModel.toString());
-
     await BuildRouteFile.buildRouteFile(apiCollectionModel, controllerPath);
   }
 }

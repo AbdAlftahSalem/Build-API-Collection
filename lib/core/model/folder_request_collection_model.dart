@@ -26,10 +26,12 @@ class DetailRequest {
   String requestName;
   RequestModel requestModel;
   List<String> response;
+  String methodName;
 
   DetailRequest({
     required this.requestName,
     required this.requestModel,
+    required this.methodName,
     this.response = const [],
   });
 
