@@ -1,6 +1,7 @@
 import 'package:args/args.dart';
 
 import '../../../features/build_api_collection/build_collections.dart';
+import '../../../features/build_routes/build_routes.dart';
 
 class GetCommand {
   static void getCommand(ArgResults results, ArgParser parser) async {
@@ -8,6 +9,8 @@ class GetCommand {
       _showHelpMessage(parser);
     } else if (results['build-api-doc']) {
       BuildApiCollection.buildApiCollection();
+    } else if (results['build-routes']) {
+      BuildRoutes.buildRoutes();
     } else {
       _showHelpMessage(parser);
     }

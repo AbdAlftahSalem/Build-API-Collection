@@ -18,7 +18,17 @@ class BuildRouteFile {
 const express = require("express");
 const router = express.Router();
 
+const {} = require("../controller/${folderRequest.folderName}_controller");\n\n
 ''';
+
+      String methods = '';
+      // get all methods from controller
+      for (var detailApiRequest in folderRequest.detailRequests) {
+        methods += "${detailApiRequest.methodName.trim()}, ";
+      }
+
+      fileContent = fileContent.replaceFirst(
+          "{}", "{${methods.replaceAll(", ", ",\n    ")}}");
 
       for (var detailApiRequest in folderRequest.detailRequests) {
         fileContent +=
@@ -29,7 +39,6 @@ const router = express.Router();
       file.writeAsStringSync(fileContent);
       print(
           '📂 Create $folderPath\\${folderRequest.folderName}.js file successfully 🎉 ...');
-      print(fileContent);
     }
   }
 }

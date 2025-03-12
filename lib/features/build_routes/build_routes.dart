@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import '../../core/model/api_collection_model.dart';
@@ -11,8 +10,6 @@ import 'bulid_route_file.dart';
 
 class BuildRoutes {
   static void buildRoutes() async {
-    print("HERE");
-
     ApiCollectionModel apiCollectionModel =
         ApiCollectionModel(infoCollection: InfoModel());
 
