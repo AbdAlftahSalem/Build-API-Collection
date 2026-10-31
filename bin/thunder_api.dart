@@ -1,5 +1,4 @@
-import 'package:thunder_api/core/services/command_service/command_service.dart';
+import 'package:thunder_api/thunder_api.dart';
 
-void main(List<String> arguments) {
-  CommandServices.startCommands(arguments);
-}
+Future<void> main(List<String> arguments) =>
+    CommandServices.startCommands(arguments);

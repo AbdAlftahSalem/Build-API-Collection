@@ -1,18 +1,26 @@
 name: thunder_api
-description: "A Dart package to build API collections directly from code with detailed annotations."
-version: 1.0.2
-repository: https://github.com/AbdAlftahSalem/Build-API-Collection.git
+description: >-
+  CLI that builds a Postman collection, web API docs and Express routes from
+  simple // @desc, // @route comments in your Node.js controllers.
+version: 1.1.0
+repository: https://github.com/AbdAlftahSalem/Build-API-Collection
+issue_tracker: https://github.com/AbdAlftahSalem/Build-API-Collection/issues
+topics:
+  - cli
+  - postman
+  - api
+  - express
+  - documentation
 
 environment:
-  sdk: ">=3.6.0 <4.0.0"
+  sdk: ^3.6.0
 
-# Add regular dependencies here.
 dependencies:
-  args: ^2.2.2
-  dio: ^5.3.2
+  args: ^2.4.0
+  path: ^1.8.0
 
 dev_dependencies:
-  lints: ^2.1.0
+  lints: ^6.0.0
   test: ^1.24.0
 
 executables:
